@@ -3,6 +3,8 @@
     --main-color-dark: #98DED9;
     --main-color-light: #C7FFD8;
     --text-color: #333;
+    --text-color-dark: #000;
+    --text-color-light: #8f8f8f;
     --pagination-color: #7c7c7c;
     --background-color: #fff;
     --background-color-dark: #f6f6f6;
@@ -13,7 +15,21 @@
     padding: 0;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 10px;
+}
+
 html {
+    /* overflow: hidden; */
     color: var(--text-color);
 }
 
@@ -23,6 +39,10 @@ li {
 
 a {
     text-decoration: none !important;
+}
+
+ul {
+    padding: 0;
 }
 
 /* ---------------------------------------Nav-------------------------------------- */
@@ -35,6 +55,7 @@ a {
     padding: 0 10px;
     height: 56px;
     margin: 0;
+    /* position: fixed; */
 }
 
 .nav-item {
@@ -196,4 +217,100 @@ a.nav-item__logo {
     font-size: 14px;
     cursor: pointer;
     min-width: 100px;
+}
+
+/* ---------------------------------------Main right-------------------------------------- */
+.main-right {
+    padding: 15px 20px 0 20px;
+    height: calc(100vh - 56px);
+    overflow-y: scroll;
+}
+
+.main-right__heading {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #7c7c7c;
+}
+
+.detail__heading {
+    display: flex;
+    font-size: 20px;
+    font-weight: 500;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #7c7c7c;
+    position: relative;
+}
+
+/* ---------------------------------------Detail content-------------------------------------- */
+.detail__content {
+    margin: 0 auto;
+}
+
+.btn-back {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 15px;
+    color: var(--main-color-dark);
+    font-size: 18px;
+}
+
+.btn-back:hover {
+    color: var(--main-color);
+}
+
+.btn-back__icon {
+    margin-right: 10px;
+}
+
+/* ---------------------------------------Right panel-------------------------------------- */
+.right-panel {
+    height: fit-content;
+    background-color: var(--background-color-dark);
+    padding: 15px;
+    border-radius: 5px;
+    color: var(--text-color-dark);
+    font-weight: 500;
+}
+
+.static-info {
+    text-align: center;
+}
+
+/* ---------------------------------------Chart-------------------------------------- */
+.chart {
+    padding: 0 5%;
+    margin-bottom: 10px;
+}
+
+/* ---------------------------------------Tabs-------------------------------------- */
+.nav-link {
+    color: var(--main-color-dark);
+}
+
+.nav-link:hover {
+    color: var(--main-color);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--main-color-dark);
+}
+
+/* ---------------------------------------Dynamic info-------------------------------------- */
+.dynamic-info {
+    padding-left: 5%;
+}
+
+.dynamic-info__label {
+    color: var(--text-color-light);
+    font-size: 12px;
+}
+
+.dynamic-info__param {
+    color: var(--text-color-dark);
+    font-size: 30px;
+    font-weight: 500;
 }

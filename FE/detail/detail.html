@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+    <!-- Chart -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../general.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="app">
+        <ul class="main-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-item__link nav-item__logo">LOGO</a>
+            </li>
+            <li class="nav-item nav-more">
+                <span class="nav-item__link nav-item__link-account">
+                    <i class="nav-item__icon-account fas fa-user-circle"></i>
+                    jThanh8144
+                    <i class="nav-item__icon-down fas fa-sort-down"></i>
+                </span>
+                <ul class="subnav">
+                    <li class="subnav-item">
+                        <a href="" class="subnav-item__link">Tài khoản</a>
+                    </li>
+                    <li class="subnav-item">
+                        <a href="" class="subnav-item__link">Đăng xuất</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="main container-fluid">
+            <div class="row">
+                <nav class="sidebar col-sm-3 col-md-3 col-lg-3 col-xl-2">
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <a href="" class="sidebar-item__link">
+                                <i class="fas fa-home sidebar-item__icon"></i>
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a href="" class="sidebar-item__link">
+                                <i class="fas fa-network-wired sidebar-item__icon"></i>
+                                Quản lí phòng máy
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="" class="sidebar-item__link">
+                                <i class="fas fa-user-alt sidebar-item__icon"></i>
+                                Quản lí tài khoản
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="sidebar-info">
+                        <a href="" class="sidebar-info__link">Giới thiệu</a>
+                        <a href="" class="sidebar-info__link">Liên hệ với chúng tôi</a>
+                        <span class="sidebar-info__license">&copy; 2021 TT</span>
+                    </div>
+                </nav>
+                <div class="main-right col-sm-9 col-md-9 col-lg-9 col-xl-10">
+                    <div class="detail__heading">
+                        <span class="detail__content">Máy 1</span>
+                    </div>
+                    <a href="" class="btn-back">
+                        <i class="fas fa-chevron-left btn-back__icon"></i>
+                        Trở về
+                    </a>
+                    <div class="main-right__content">
+                        <div class="row mt-2">
+                            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#">CPU</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">RAM</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">DISK</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">GPU</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Thêm</a>
+                                    </li>
+                                </ul>
+                                <div class="chart">
+                                    <canvas id="lineChart"></canvas>
+                                </div>
+                                <div class="dynamic-info">
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <div class="dynamic-info__label">
+                                                Đang sử dụng
+                                            </div>
+                                            <div class="dynamic-info__param">
+                                                7%
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <div class="dynamic-info__label">
+                                                Tốc độ
+                                            </div>
+                                            <div class="dynamic-info__param">
+                                                3.95 GHz
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <div class="dynamic-info__label">
+                                                Processes
+                                            </div>
+                                            <div class="dynamic-info__param">
+                                                245
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <div class="dynamic-info__label">
+                                                Threads
+                                            </div>
+                                            <div class="dynamic-info__param">
+                                                2860
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                                <div class="right-panel">
+                                    <div class="row mb-3">
+                                        <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            Chipset
+                                        </div>
+                                        <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                                            Intel Core i7 9750h
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            Số core
+                                        </div>
+                                        <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                                            4
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            GPU
+                                        </div>
+                                        <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                                            GTX 1650
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            RAM
+                                        </div>
+                                        <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                                            8
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            IP
+                                        </div>
+                                        <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                                            192.168.1.1
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            MAC
+                                        </div>
+                                        <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                                            255.255.255.254
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- chart -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+    <script src="../general.js"></script>
+    <script>
+        var ctxL = document.getElementById("lineChart").getContext('2d');
+        var myLineChart = new Chart(ctxL, {
+            type: 'line',
+            data: {
+                labels: ["60 seconds", "", "", "", "", "", "0"],
+                datasets: [{
+                    label: "Utilzation",
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    backgroundColor: [
+                        'rgba(152, 222, 217, .5)',
+                    ],
+                    borderColor: [
+                        'rgba(152, 222, 217, 1)',
+                    ],
+                    borderWidth: 2
+                }
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+
+</html>

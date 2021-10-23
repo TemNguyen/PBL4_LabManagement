@@ -1,0 +1,11 @@
+.main-right__content {
+    margin-top: 20px;
+}
+
+.detail-link {
+    color: var(--main-color-dark) !important;
+}
+
+.detail-link:hover {
+    color: var(--main-color) !important;
+}
