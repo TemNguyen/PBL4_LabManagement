@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài khoản</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../general.css">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <ul class="main-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-item__link nav-item__logo">LOGO</a>
+            </li>
+            <li class="nav-item nav-more">
+                <span class="nav-item__link nav-item__link-account">
+                    <i class="nav-item__icon-account fas fa-user-circle"></i>
+                    jThanh8144
+                    <i class="nav-item__icon-down fas fa-sort-down"></i>
+                </span>
+                <ul class="subnav">
+                    <li class="subnav-item">
+                        <a href="" class="subnav-item__link">Tài khoản</a>
+                    </li>
+                    <li class="subnav-item">
+                        <a href="" class="subnav-item__link">Đăng xuất</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="main container-fluid">
+            <div class="row">
+                <nav class="sidebar col-sm-3 col-md-3 col-lg-3 col-xl-2">
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <a href="" class="sidebar-item__link">
+                                <i class="fas fa-home sidebar-item__icon"></i>
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="" class="sidebar-item__link">
+                                <i class="fas fa-network-wired sidebar-item__icon"></i>
+                                Quản lí phòng máy
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a href="" class="sidebar-item__link">
+                                <i class="fas fa-user-alt sidebar-item__icon"></i>
+                                Quản lí tài khoản
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="sidebar-info">
+                        <a href="" class="sidebar-info__link">Giới thiệu</a>
+                        <a href="" class="sidebar-info__link">Liên hệ với chúng tôi</a>
+                        <span class="sidebar-info__license">&copy; 2021 TT</span>
+                    </div>
+                </nav>
+                <div class="main-right col-sm-9 col-md-9 col-lg-9 col-xl-10">
+                    <span class="main-right__heading">
+                        Thông tin tài khoản
+                    </span>
+                    <div class="account">
+                        <div>
+                            <span class="account-label">Tên tài khoản</span>
+                            <span class="account-name">jThanh8144</span>
+                        </div>
+                        <a href="" class="repass-btn">
+                            <i class="fas fa-pencil-alt"></i>
+                            Đổi mật khẩu
+                        </a>
+                        <form action="" method="POST" class="repass-form hide">
+                            <div class="form-group">
+                                <label for="old-pass" class="form-label">Mật khẩu cũ</label>
+                                <input type="password" id="old-pass" name="old-pass" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-pass" class="form-label">Mật khẩu mới</label>
+                                <input type="password" id="new-pass" name="new-pass" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="re-pass" class="form-label">Nhập lại mật khẩu</label>
+                                <input type="password" id="re-pass" name="re-pass" class="form-control">
+                            </div>
+
+                            <div class="test">
+                                <button class="btn">Lưu thay đổi</button>
+                                <button class="btn-cancel">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="../general.js"></script>
+    <script>
+        const repassBtn = document.querySelector('.repass-btn');
+        const repassForm = document.querySelector('.repass-form');
+        repassBtn.onclick = (e) => {
+            e.preventDefault();
+            if (repassForm.classList.contains('hide')) {
+                repassForm.classList.remove('hide');
+            } else {
+                repassForm.classList.add('hide');
+            }
+        } 
+    </script>
+</body>
+
+</html>
