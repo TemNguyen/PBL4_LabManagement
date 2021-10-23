@@ -9,6 +9,7 @@ namespace PC_Heal_ClientService
     public class CI
     {
         public string ComputerName { get; set; }
+        public string GPUName { get; set; }
         public string NumberOfProcessors { get; set; }
         public string NumberOfLogicalProcessors { get; set; }
         public string ProcessorName { get; set; }

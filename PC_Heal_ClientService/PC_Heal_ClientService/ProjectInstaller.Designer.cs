@@ -29,17 +29,17 @@ namespace PC_Heal_ClientService
         /// </summary>
         private void InitializeComponent()
         {
-            this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
+            this.PC_Heal_Installer = new System.ServiceProcess.ServiceProcessInstaller();
             this.PC_Heal = new System.ServiceProcess.ServiceInstaller();
             // 
-            // serviceProcessInstaller1
+            // PC_Heal_Installer
             // 
-            this.serviceProcessInstaller1.Password = null;
-            this.serviceProcessInstaller1.Username = null;
+            this.PC_Heal_Installer.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
+            this.PC_Heal_Installer.Password = null;
+            this.PC_Heal_Installer.Username = null;
             // 
             // PC_Heal
             // 
-            this.PC_Heal.DelayedAutoStart = true;
             this.PC_Heal.Description = "PC_Heal\'s Service";
             this.PC_Heal.DisplayName = "PC_Heal";
             this.PC_Heal.ServiceName = "PC_Heal";
@@ -48,14 +48,14 @@ namespace PC_Heal_ClientService
             // ProjectInstaller
             // 
             this.Installers.AddRange(new System.Configuration.Install.Installer[] {
-            this.serviceProcessInstaller1,
+            this.PC_Heal_Installer,
             this.PC_Heal});
 
         }
 
         #endregion
 
-        private System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller1;
+        private System.ServiceProcess.ServiceProcessInstaller PC_Heal_Installer;
         private System.ServiceProcess.ServiceInstaller PC_Heal;
     }
 }

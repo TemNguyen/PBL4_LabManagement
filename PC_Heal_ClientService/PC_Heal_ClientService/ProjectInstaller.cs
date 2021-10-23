@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
 using System.Linq;
+using System.ServiceProcess;
 using System.Threading.Tasks;
 
 namespace PC_Heal_ClientService
@@ -15,5 +16,7 @@ namespace PC_Heal_ClientService
         {
             InitializeComponent();
         }
+
+
     }
 }
