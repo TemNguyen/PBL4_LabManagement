@@ -20,9 +20,9 @@ namespace PC_Heal_ServerService
 {
     public partial class Service1 : ServiceBase
     {
-        const int MAX_CONNECTION = 15;
         const int PORT_NUMBER = 5000;
         static TcpListener listener;
+        static HashSet<TcpClient> clients;
 
         System.Timers.Timer timer = null;
         public Service1()
@@ -32,6 +32,7 @@ namespace PC_Heal_ServerService
 
         protected override void OnStart(string[] args)
         {
+            clients = new HashSet<TcpClient>();
             timer = new System.Timers.Timer();
             timer.Interval = 2000;
             timer.Elapsed += Timer_Elapsed;
@@ -51,7 +52,7 @@ namespace PC_Heal_ServerService
         {
             try
             {
-                for (int i = 0; i < MAX_CONNECTION; i++)
+                for (int i = 0; i < clients.Count + 1; i++)
                 {
                     new Thread(Processing).Start();
                 }
@@ -74,7 +75,8 @@ namespace PC_Heal_ServerService
                 while (true)
                 {
                     var client = listener.AcceptTcpClient();
-
+                    if(clients.Count < 15)
+                        clients.Add(client);
                     try
                     {
                         var stream = client.GetStream();

@@ -18,6 +18,11 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+            context.Accounts.AddOrUpdate(p => p.Username, new Account
+            {
+                Username = "admin",
+                Password = "admin"
+            });
         }
     }
 }

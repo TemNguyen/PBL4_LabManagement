@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
     <Compile Include="BLL\BLL.cs" />
     <Compile Include="CI.cs" />
     <Compile Include="DAL\CIDbContext.cs" />
@@ -68,6 +69,10 @@
     <Compile Include="Migrations\202110240310510_initDb.cs" />
     <Compile Include="Migrations\202110240310510_initDb.designer.cs">
       <DependentUpon>202110240310510_initDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110241559005_add_account_table.cs" />
+    <Compile Include="Migrations\202110241559005_add_account_table.designer.cs">
+      <DependentUpon>202110241559005_add_account_table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -92,6 +97,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202110240310510_initDb.resx">
       <DependentUpon>202110240310510_initDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110241559005_add_account_table.resx">
+      <DependentUpon>202110241559005_add_account_table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>

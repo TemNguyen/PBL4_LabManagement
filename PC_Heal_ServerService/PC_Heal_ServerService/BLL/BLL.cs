@@ -61,8 +61,11 @@ namespace PC_Heal_ServerService.BLL
                     {
                         computerIndb.CPU_Usage = computer.CPU_Usage;
                         computerIndb.RAM_Usage = computer.RAM_Usage;
-                        computerIndb.C_DiskFree = computer.C_DiskFree;
-                        computerIndb.D_DiskFree = computer.D_DiskFree;
+                        computerIndb.Max_Clock_Speed = computer.Max_Clock_Speed;
+                        computerIndb.Num_Thread = computer.Num_Thread;
+                        computerIndb.Num_Process = computer.Num_Process;
+                        computerIndb.Disk_Usage = computer.Disk_Usage;
+                        computerIndb.GPU_Usage = computer.GPU_Usage;
 
                         db.SaveChanges();
                         return true;

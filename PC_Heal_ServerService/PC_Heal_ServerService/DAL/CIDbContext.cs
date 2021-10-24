@@ -18,6 +18,7 @@ namespace PC_Heal_ServerService.DAL
             Database.SetInitializer(new CIInitializer());
         }
         public DbSet<CI> CIs { get; set; }
+        public DbSet<Account> Accounts { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

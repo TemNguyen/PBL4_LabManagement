@@ -50,6 +50,7 @@ namespace PC_Heal_ClientService
         static CI GetCI()
         {
             var computerInfor = new CI();
+
             using (var computer_System = new System.Management.ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get())
             {
                 try
@@ -57,13 +58,12 @@ namespace PC_Heal_ClientService
                     foreach (var item in computer_System)
                     {
                         computerInfor.ComputerName = item["Name"].ToString();
-                        computerInfor.NumberOfProcessors = item["NumberOfProcessors"].ToString();
                         computerInfor.NumberOfLogicalProcessors = item["NumberOfLogicalProcessors"].ToString();
                     }
                 }
                 catch (Exception)
                 {
-                    //ignore
+                    
                 }
 
             }
@@ -74,7 +74,8 @@ namespace PC_Heal_ClientService
                 {
                     foreach (var item in processor)
                     {
-                        computerInfor.ProcessorName = item["Name"].ToString();
+                        computerInfor.Chipset = item["Name"].ToString();
+                        computerInfor.Max_Clock_Speed = item["MaxClockSpeed"].ToString();
                         break;
                     }
                 }
@@ -88,16 +89,17 @@ namespace PC_Heal_ClientService
             {
                 try
                 {
-                    foreach(var item in gpu)
+                    string gpu_Name = "";
+                    foreach (var item in gpu)
                     {
-                        computerInfor.GPUName = item["Name"].ToString();
-                        break;
+                        gpu_Name += item["Name"].ToString() + ",";
                     }
+                    computerInfor.GPUName = gpu_Name.Substring(0, gpu_Name.Length - 1);
                 }
                 catch (Exception)
                 {
 
-                    
+
                 }
             }
 
@@ -129,11 +131,21 @@ namespace PC_Heal_ClientService
                 }
             }
 
-
-            DriveInfo dDisk = new DriveInfo("D");
-            DriveInfo cDisk = new DriveInfo("C");
-            computerInfor.C_DiskFree = ((cDisk.AvailableFreeSpace / (float)cDisk.TotalSize) * 100).ToString("00.00");
-            computerInfor.D_DiskFree = ((dDisk.AvailableFreeSpace / (float)dDisk.TotalSize) * 100).ToString("00.00");
+            using(var disk = new ManagementObjectSearcher("SELECT * FROM Win32_Volume").Get())
+            {
+                try
+                {
+                    foreach (var item in disk)
+                    {
+                        var usage = double.Parse(item["FreeSpace"].ToString()) / double.Parse(item["Capacity"].ToString());
+                        computerInfor.Disk_Usage = (usage * 100).ToString("00.00");
+                    }
+                }
+                catch (Exception)
+                {
+                    
+                }
+            }
 
             using (var processor = new ManagementObjectSearcher("root\\CIMV2",
                     "SELECT * FROM Win32_PerfFormattedData_PerfOS_Processor").Get())
@@ -156,6 +168,46 @@ namespace PC_Heal_ClientService
                 }
             }
 
+            int process = 0;
+            int threads = 0;
+
+            using(var p = new ManagementObjectSearcher("select * from Win32_Process").Get())
+            {
+                try
+                {
+                    foreach (var item in p)
+                    {
+                        threads += Convert.ToInt32(item["ThreadCount"].ToString());
+                        process++;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    
+                }
+
+                computerInfor.Num_Thread = threads.ToString();
+                computerInfor.Num_Process = process.ToString();
+            }
+
+            try
+            {
+                var category = new PerformanceCounterCategory("GPU Engine");
+                var gpuCounter = category.GetCounters("Utilization Percentage");
+                foreach(var item in gpuCounter)
+                {
+                    computerInfor.GPU_Usage = item.NextValue().ToString("00.00");
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+
+
+
+
             using (var operating = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_OperatingSystem").Get())
             {
                 try
@@ -163,6 +215,7 @@ namespace PC_Heal_ClientService
                     foreach (var item in operating)
                     {
                         computerInfor.RAM_Usage = ((int.Parse(item["FreePhysicalMemory"].ToString()) / (float)int.Parse(item["TotalVisibleMemorySize"].ToString())) * 100).ToString("00.00");
+                        computerInfor.RAM_Size = (int.Parse(item["TotalVisibleMemorySize"].ToString()) / 1024).ToString();
                     }
                 }
                 catch (Exception)
