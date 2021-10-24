@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PC_Heal_ServerService.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +13,8 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Timers;
+
 
 namespace PC_Heal_ServerService
 {
@@ -20,6 +23,8 @@ namespace PC_Heal_ServerService
         const int MAX_CONNECTION = 15;
         const int PORT_NUMBER = 5000;
         static TcpListener listener;
+
+        System.Timers.Timer timer = null;
         public Service1()
         {
             InitializeComponent();
@@ -27,14 +32,34 @@ namespace PC_Heal_ServerService
 
         protected override void OnStart(string[] args)
         {
-            listener = new TcpListener(IPAddress.Any, PORT_NUMBER);
-            listener.Start();
-
-            for(int i = 0; i < MAX_CONNECTION; i++)
+            timer = new System.Timers.Timer();
+            timer.Interval = 2000;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Enabled = true;
+            try
             {
-                new Thread(Processing).Start();
+                listener = new TcpListener(IPAddress.Any, PORT_NUMBER);
+                listener.Start();
             }
+            catch (Exception)
+            {
 
+            }
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < MAX_CONNECTION; i++)
+                {
+                    new Thread(Processing).Start();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         protected override void OnStop()
@@ -67,19 +92,18 @@ namespace PC_Heal_ServerService
                             BLL.BLL.Instance.Add(data);
                         }
 
+
                         stream.Close();
                     }
                     catch (Exception)
                     {
 
-                        throw;
                     }
                 }
             }
             catch (Exception)
             {
 
-                throw;
             }
         }
     }

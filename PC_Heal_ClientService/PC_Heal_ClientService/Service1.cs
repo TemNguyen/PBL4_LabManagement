@@ -84,6 +84,23 @@ namespace PC_Heal_ClientService
                 }
             }
 
+            using (var gpu = new System.Management.ManagementObjectSearcher("select * from Win32_VideoController").Get())
+            {
+                try
+                {
+                    foreach(var item in gpu)
+                    {
+                        computerInfor.GPUName = item["Name"].ToString();
+                        break;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    
+                }
+            }
+
             string IP = String.Empty;
             string MAC = String.Empty;
 

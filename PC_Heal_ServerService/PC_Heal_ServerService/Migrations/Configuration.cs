@@ -18,11 +18,6 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            context.CIs.AddOrUpdate(p => p.ComputerName, new CI()
-            {
-                ComputerName = "test data",
-                CPU_Usage = "100%"
-            });
         }
     }
 }
