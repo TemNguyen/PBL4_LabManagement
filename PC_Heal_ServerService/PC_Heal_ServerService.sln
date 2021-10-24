@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC_Heal_ServerService", "PC_Heal_ServerService\PC_Heal_ServerService.csproj", "{1F76C1D7-AAAB-45D0-B704-43F8D7B4F397}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PC_Heal_ServiceService_Setup", "PC_Heal_ServiceService_Setup\PC_Heal_ServiceService_Setup.vdproj", "{C09296FD-C8C3-423C-A9B7-9EB8E8BA712D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F76C1D7-AAAB-45D0-B704-43F8D7B4F397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F76C1D7-AAAB-45D0-B704-43F8D7B4F397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F76C1D7-AAAB-45D0-B704-43F8D7B4F397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F76C1D7-AAAB-45D0-B704-43F8D7B4F397}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C09296FD-C8C3-423C-A9B7-9EB8E8BA712D}.Debug|Any CPU.ActiveCfg = Debug
+		{C09296FD-C8C3-423C-A9B7-9EB8E8BA712D}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6E0CAB6-2CB3-4CB7-8959-90B0B7380485}
+	EndGlobalSection
+EndGlobal
