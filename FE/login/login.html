@@ -8,9 +8,9 @@
     <title>Đăng nhập</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
     <link rel="stylesheet" href="../general.css">
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="/vendor/open-iconic-master/font/css/open-iconic-bootstrap.css">
 </head>
 
 <body>
@@ -21,23 +21,23 @@
             </li>
         </ul>
 
-        <div class="main">
+        <div class="main container-fluid">
             <form action="" method="POST" class="login-form">
                 <h3 class="heading mb-4">Đăng nhập</h3>
 
                 <div class="form-group mb-4">
                     <input type="text" id="account" name="account" placeholder="Tên tài khoản" class="form-control">
-                    <span class="form-message"></span>
+                    <span class="form-message">Vui lòng nhập tài khoản</span>
                 </div>
 
                 <div class="form-group mb4">
                     <input type="password" id="password" name="password" placeholder="Mật khẩu" class="form-control">
-                    <span class="form-message"></span>
+                    <span class="form-message">Vui lòng nhập mật khẩu</span>
                 </div>
 
                 <div class="form-group">
                     <label class="checkbox">Nhớ mật khẩu
-                        <input type="checkbox" name="checkbox" id="listen" value="listen">
+                        <input type="checkbox" name="checkbox" class="save-account-checkbox">
                         <span class="checkmark"></span>
                     </label>
                 </div>
@@ -58,6 +58,61 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+    <script src="../general.js"></script>
+    <script>
+        const inputs = document.querySelectorAll('.form-control');
+        const form = document.querySelector('.login-form');
+        const saveAccount = document.querySelector('.save-account-checkbox');
+
+        function getParent(element, selector) {
+            while (element.parentElement) {
+                if (element.parentElement.matches(selector)) {
+                    return element.parentElement;
+                }
+                element = element.parentElement;
+            }
+        }
+
+        Array.from(inputs).forEach(input => {
+            input.onblur = function() {
+                if (!input.value) {
+                    getParent(input, '.form-group').classList.add('invalid');
+                }
+                else {
+                    getParent(input, '.form-group').classList.remove('invalid');
+                }
+            }
+            input.oninput = function() {
+                getParent(input, '.form-group').classList.remove('invalid');
+            }
+        });
+
+        form.onsubmit = function (e) {
+            e.preventDefault();
+            var isTrue = true;
+            Array.from(inputs).forEach(input => {
+                if (!input.value) isTrue = false;
+            });
+            if (isTrue) {
+                if (saveAccount.checked == true) {
+                    setLocalStorage('saveAccount', { user: inputs[0].value, pass: inputs[1].value });
+                } else {
+                    deleteLocalStorage('saveAccount');
+                }
+                form.submit();
+            }
+        }
+
+        window.onload = () => {
+            const data = getLocalStorage('saveAccount');
+            if (data.length != 0) {
+                inputs[0].value = data.user;
+                inputs[1].value = data.pass;
+                saveAccount.checked = true;
+            }
+        }
+    </script>
 </body>
 
 </html>
