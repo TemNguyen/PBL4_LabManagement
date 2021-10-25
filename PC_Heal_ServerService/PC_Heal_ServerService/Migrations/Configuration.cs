@@ -23,6 +23,8 @@
                 Username = "admin",
                 Password = "admin"
             });
+
+            context.SaveChanges();
         }
     }
 }
