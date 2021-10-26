@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
+using Newtonsoft.Json;
 using PC_Heal_ServerService.DAL;
 using System;
 using System.Collections.Generic;
@@ -25,6 +28,11 @@ namespace PC_Heal_ServerService
         static HashSet<TcpClient> clients;
 
         System.Timers.Timer timer = null;
+
+        static MongoClient mongoClient = new MongoClient("mongodb+srv://ndthinhdut19:pbl2021mongodb@labmanagementdb.j4waq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+        static IMongoDatabase mongoDatabase = mongoClient.GetDatabase("LabManagementDatabase");
+        static IMongoCollection<BsonDocument> mongoCollection = null;
+
         public Service1()
         {
             InitializeComponent();
@@ -39,6 +47,23 @@ namespace PC_Heal_ServerService
             timer.Enabled = true;
             try
             {
+                try
+                {
+                    //init default Account
+                    mongoCollection = mongoDatabase.GetCollection<BsonDocument>("Account");
+                    var defaultAccount = new Account
+                    {
+                        Username = "admin",
+                        Password = "admin"
+                    };
+                    var document = defaultAccount.ToBsonDocument();
+                    mongoCollection.InsertOne(document);
+                }
+                catch (Exception)
+                {
+
+                }
+
                 listener = new TcpListener(IPAddress.Any, PORT_NUMBER);
                 listener.Start();
             }
@@ -75,7 +100,7 @@ namespace PC_Heal_ServerService
                 while (true)
                 {
                     var client = listener.AcceptTcpClient();
-                    if(clients.Count < 15)
+                    if(clients.Count < 10)
                         clients.Add(client);
                     try
                     {
@@ -84,17 +109,69 @@ namespace PC_Heal_ServerService
 
                         var serializer = new JsonSerializer();
                         var data = serializer.Deserialize(reader, typeof(CI)) as CI;
-
-                        if (BLL.BLL.Instance.IsExist(data.ComputerName))
+                        //for SQL
+                        try
                         {
-                            BLL.BLL.Instance.Update(data);
+                            if (BLL.BLL.Instance.IsExist(data.ComputerName))
+                            {
+                                BLL.BLL.Instance.Update(data);
+                            }
+                            else
+                            {
+                                BLL.BLL.Instance.Add(data);
+                            }
                         }
-                        else
+                        catch (Exception)
                         {
-                            BLL.BLL.Instance.Add(data);
+
                         }
+                        //for mongoDB
+                        try
+                        {
+                            mongoCollection = mongoDatabase.GetCollection<BsonDocument>("CI");
 
+                            var document = data.ToBsonDocument();
+                            var filter = Builders<BsonDocument>.Filter.Eq("_id", data.ComputerName);
+                            var c = mongoCollection.Find(filter).FirstOrDefault();
 
+                            if (c == null)
+                            {
+                                try
+                                {
+                                    mongoCollection.InsertOne(document);
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    var CIInDB = BsonSerializer.Deserialize<CI>(c);
+                                    var update = Builders<BsonDocument>.Update.Set("CPU_Usage", data.CPU_Usage)
+                                             .Set("Max_Clock_Speed", data.Max_Clock_Speed)
+                                             .Set("Num_Thread", data.Num_Thread)
+                                             .Set("Num_Process", data.Num_Process)
+                                             .Set("Disk_Usage", data.Disk_Usage)
+                                             .Set("RAM_Usage", data.RAM_Usage)
+                                             .Set("GPU_Usage", data.GPU_Usage)
+                                             .Set("ActiveTime", CIInDB.ActiveTime + 1);
+                                    mongoCollection.UpdateOne(filter, update);
+
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                        
                         stream.Close();
                     }
                     catch (Exception)

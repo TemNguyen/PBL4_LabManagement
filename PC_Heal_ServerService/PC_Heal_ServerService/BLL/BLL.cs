@@ -37,7 +37,7 @@ namespace PC_Heal_ServerService.BLL
                     return false;
                 else
                 {
-                    db.CIs.Add(computer);
+                    db.CI.Add(computer);
                     db.SaveChanges();
                     return true;
                 }
@@ -51,7 +51,7 @@ namespace PC_Heal_ServerService.BLL
                     return false;
                 else
                 {
-                    var computerIndb = db.CIs.Find(computer.ComputerName);
+                    var computerIndb = db.CI.Find(computer.ComputerName);
 
                     if(computerIndb == null)
                     {
@@ -66,7 +66,7 @@ namespace PC_Heal_ServerService.BLL
                         computerIndb.Num_Process = computer.Num_Process;
                         computerIndb.Disk_Usage = computer.Disk_Usage;
                         computerIndb.GPU_Usage = computer.GPU_Usage;
-
+                        computerIndb.ActiveTime = computerIndb.ActiveTime++;
                         db.SaveChanges();
                         return true;
                     }
@@ -78,7 +78,7 @@ namespace PC_Heal_ServerService.BLL
         {
             using(CIDbContext db = new CIDbContext())
             {
-                var computer = db.CIs.Find(computerName);
+                var computer = db.CI.Find(computerName);
 
                 if (computer == null)
                     return false;
