@@ -14,6 +14,13 @@ db.connect();
 // static file
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(
+  express.urlencoded({
+      extended: true,
+  }),
+);
+app.use(express.json());
+
 // template engine
 app.engine(
   'hbs',
@@ -28,6 +35,7 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 
 // routes init
 route(app);
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

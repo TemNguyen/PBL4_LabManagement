@@ -54,6 +54,26 @@
     box-shadow: none;
 }
 
+.form-control:hover {
+    border-color: var(--main-color-dark);
+}
+
+.form-group.invalid .form-control {
+    border-color: var(--color-red);
+}
+
+.form-group.invalid .form-message {
+    display: block;
+}
+
+.form-message {
+    display: none;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 4px 0 0;
+    color: var(--color-red);
+}
+
 .form-submit {
     outline: none;
     background-color: var(--main-color);

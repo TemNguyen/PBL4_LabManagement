@@ -7,3 +7,15 @@ sidebarItems.forEach(sidebarItem => {
         sidebarItem.classList.add('active');
     }
 });
+
+function getLocalStorage(name) {
+    return JSON.parse(localStorage.getItem(name)) || [];
+}
+
+function setLocalStorage(name, status) {
+    localStorage.setItem(name, JSON.stringify(status));
+}
+
+function deleteLocalStorage(name) {
+    localStorage.removeItem(name);
+}
