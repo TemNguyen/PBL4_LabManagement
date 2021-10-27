@@ -19,3 +19,7 @@ function setLocalStorage(name, status) {
 function deleteLocalStorage(name) {
     localStorage.removeItem(name);
 }
+
+if (document.querySelector('.message > .message-content').innerText !== '') {
+    document.querySelector('.message').classList.add('show');
+}

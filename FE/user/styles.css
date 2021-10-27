@@ -33,11 +33,12 @@
 .form-group {
     margin-bottom: 10px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .form-label {
     width: 180px;
+    margin: 0;
 }
 
 .form-control {
@@ -45,11 +46,25 @@
 }
 
 .form-control:focus {
-    box-shadow: 0 0 0 2px var(--main-color-dark);
+    box-shadow: 0 0 0 1px var(--main-color-dark);
     border-color: var(--main-color-dark);
 }
 
-.test {
-    position: absolute;
-    left: 10%;
+.form-group.invalid .form-control {
+    border-color: var(--color-red);
+}
+
+.form-group.invalid .form-control:focus {
+    box-shadow: 0 0 0 1px var(--color-red);
+}
+
+.form-group.invalid .form-message {
+    display: block;
+}
+
+.form-message {
+    display: none;
+    font-size: 12px;
+    margin-left: 10px;
+    color: var(--color-red);
 }
