@@ -23,12 +23,17 @@
     {{/if}}
     <link rel="stylesheet" href="/css/general.css">
 
-    {{#switch styles}} 
-            {{#case 'login'}} <link rel="stylesheet" href="/css/login.css"> {{/case}} 
-            {{#case 'dashboard'}} <link rel="stylesheet" href="/css/dashboard.css"> {{/case}} 
-            {{#case 'detail'}} <link rel="stylesheet" href="/css/detail.css"> {{/case}} 
-            {{#case 'devices'}} <link rel="stylesheet" href="/css/devices.css"> {{/case}} 
-            {{#case 'user'}} <link rel="stylesheet" href="/css/user.css"> {{/case}} 
+    {{#switch styles}}
+    {{#case 'login'}}
+    <link rel="stylesheet" href="/css/login.css"> {{/case}}
+    {{#case 'dashboard'}}
+    <link rel="stylesheet" href="/css/dashboard.css"> {{/case}}
+    {{#case 'detail'}}
+    <link rel="stylesheet" href="/css/detail.css"> {{/case}}
+    {{#case 'devices'}}
+    <link rel="stylesheet" href="/css/devices.css"> {{/case}}
+    {{#case 'user'}}
+    <link rel="stylesheet" href="/css/user.css"> {{/case}}
     {{/switch}}
 </head>
 
@@ -36,7 +41,7 @@
     <div class="app">
         <ul class="main-nav">
             <li class="nav-item">
-                <a href="#" class="nav-item__link nav-item__logo">LOGO</a>
+                <a href="/" class="nav-item__link nav-item__logo">LOGO</a>
             </li>
             {{#unless isLoginPage}}
             <li class="nav-item nav-more">
@@ -47,10 +52,10 @@
                 </span>
                 <ul class="subnav">
                     <li class="subnav-item">
-                        <a href="" class="subnav-item__link">Tài khoản</a>
+                        <a href="/user" class="subnav-item__link">Tài khoản</a>
                     </li>
                     <li class="subnav-item">
-                        <a href="" class="subnav-item__link">Đăng xuất</a>
+                        <a href="/logout" class="subnav-item__link">Đăng xuất</a>
                     </li>
                 </ul>
             </li>
@@ -63,12 +68,19 @@
             {{{ body }}}
 
             {{else}}
-            
+
             {{> sidebar}}
-            
+
             {{/if}}
 
         </div>
+    </div>
+
+    <div class="message alert {{ message.status }} alert-dismissible fade" role="alert">
+        <span class="message-content">{{ message.content }}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -83,16 +95,19 @@
 
     {{#if haveChart}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-    
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
     {{/if}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
 
     <script src="/js/general.js"></script>
-    
+
 </body>
 
 </html>

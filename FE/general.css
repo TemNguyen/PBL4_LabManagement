@@ -315,3 +315,14 @@ a.nav-item__logo {
     font-size: 30px;
     font-weight: 500;
 }
+
+/* ---------------------------------------Message-------------------------------------- */
+.app {
+    position: relative;
+}
+
+.message {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}

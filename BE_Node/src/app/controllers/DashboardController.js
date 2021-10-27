@@ -6,7 +6,8 @@ class DashboardController {
             isLoginPage: false,
             haveChart: true,
             styles: 'dashboard',
-            username: '',
+            dashboard: 'active',
+            username: res.locals.localUsername,
         });
     }
 }
