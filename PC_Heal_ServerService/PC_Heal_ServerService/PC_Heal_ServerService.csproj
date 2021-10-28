@@ -145,6 +145,10 @@
     <Compile Include="Migrations\202110260817155_AddActiveTime.designer.cs">
       <DependentUpon>202110260817155_AddActiveTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110280943169_AddIsOnline.cs" />
+    <Compile Include="Migrations\202110280943169_AddIsOnline.designer.cs">
+      <DependentUpon>202110280943169_AddIsOnline.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -176,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110260817155_AddActiveTime.resx">
       <DependentUpon>202110260817155_AddActiveTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110280943169_AddIsOnline.resx">
+      <DependentUpon>202110280943169_AddIsOnline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>

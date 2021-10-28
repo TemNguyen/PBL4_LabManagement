@@ -30,6 +30,20 @@ namespace PC_Heal_ClientService
             
         }
 
+        protected override void OnShutdown()
+        {
+            try
+            {
+                CI computer = GetCI();
+                computer.IsOnline = false;
+                SendToServer.Send(computer);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             try
@@ -50,7 +64,7 @@ namespace PC_Heal_ClientService
         static CI GetCI()
         {
             var computerInfor = new CI();
-
+            computerInfor.IsOnline = true;
             using (var computer_System = new System.Management.ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get())
             {
                 try

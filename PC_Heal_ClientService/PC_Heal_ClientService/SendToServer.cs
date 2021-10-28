@@ -14,7 +14,7 @@ namespace PC_Heal_ClientService
     {
         public static void Send(CI computer)
         {
-            var serverIP = IPAddress.Parse("127.0.0.1");
+            var serverIP = IPAddress.Parse("192.168.0.104");
             int serverPort = 5000;
 
             while (true)

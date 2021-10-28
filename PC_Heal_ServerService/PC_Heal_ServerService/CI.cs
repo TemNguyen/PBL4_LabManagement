@@ -44,5 +44,7 @@ namespace PC_Heal_ServerService
         public string GPU_Usage { get; set; }
         [BsonElement]
         public int ActiveTime { get; set; }
+        [BsonElement]
+        public bool IsOnline { get; set; }      
     }
 }

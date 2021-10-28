@@ -22,5 +22,6 @@ namespace PC_Heal_ClientService
         public string Disk_Usage { get; set; }
         public string RAM_Usage { get; set; }
         public string GPU_Usage { get; set; }
+        public bool IsOnline { get; set; }
     }
 }

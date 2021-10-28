@@ -77,7 +77,7 @@ namespace PC_Heal_ServerService
         {
             try
             {
-                for (int i = 0; i < clients.Count + 1; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     new Thread(Processing).Start();
                 }
@@ -100,8 +100,8 @@ namespace PC_Heal_ServerService
                 while (true)
                 {
                     var client = listener.AcceptTcpClient();
-                    if(clients.Count < 10)
-                        clients.Add(client);
+                    //if(clients.Count < 10)
+                    //    clients.Add(client);
                     try
                     {
                         var stream = client.GetStream();
@@ -151,13 +151,14 @@ namespace PC_Heal_ServerService
                                 {
                                     var CIInDB = BsonSerializer.Deserialize<CI>(c);
                                     var update = Builders<BsonDocument>.Update.Set("CPU_Usage", data.CPU_Usage)
-                                             .Set("Max_Clock_Speed", data.Max_Clock_Speed)
-                                             .Set("Num_Thread", data.Num_Thread)
-                                             .Set("Num_Process", data.Num_Process)
-                                             .Set("Disk_Usage", data.Disk_Usage)
-                                             .Set("RAM_Usage", data.RAM_Usage)
-                                             .Set("GPU_Usage", data.GPU_Usage)
-                                             .Set("ActiveTime", CIInDB.ActiveTime + 1);
+                                        .Set("Max_Clock_Speed", data.Max_Clock_Speed)
+                                        .Set("Num_Thread", data.Num_Thread)
+                                        .Set("Num_Process", data.Num_Process)
+                                        .Set("Disk_Usage", data.Disk_Usage)
+                                        .Set("RAM_Usage", data.RAM_Usage)
+                                        .Set("GPU_Usage", data.GPU_Usage)
+                                        .Set("ActiveTime", CIInDB.ActiveTime + 1)
+                                        .Set("IsOnline", CIInDB.IsOnline);
                                     mongoCollection.UpdateOne(filter, update);
 
                                 }
