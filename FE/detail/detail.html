@@ -20,6 +20,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../general.css">
+    <link rel="stylesheet" href="./styles.css">
 
 </head>
 
@@ -86,61 +87,148 @@
                     <div class="main-right__content">
                         <div class="row mt-2">
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
-                                <ul class="nav nav-tabs">
+                                <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#">CPU</a>
+                                        <a class="nav-link active" href="#CPU" id="CPU-tab" data-toggle="tab" role="tab"
+                                            aria-controls="CPU" aria-selected="true">CPU</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">RAM</a>
+                                        <a class="nav-link" href="#RAM" id="RAM-tab" data-toggle="tab" role="tab"
+                                            aria-controls="RAM" aria-selected="false">RAM</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">DISK</a>
+                                        <a class="nav-link" href="#DISK" id="DISK-tab" data-toggle="tab" role="tab"
+                                            aria-controls="DISK" aria-selected="false">DISK</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">GPU</a>
+                                        <a class="nav-link" href="#GPU" id="GPU-tab" data-toggle="tab" role="tab"
+                                            aria-controls="GPU" aria-selected="false">GPU</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Thêm</a>
+                                        <a class="nav-link" href="#more" id="more-tab" data-toggle="tab" role="tab"
+                                            aria-controls="more" aria-selected="false">Thêm</a>
                                     </li>
                                 </ul>
-                                <div class="chart">
-                                    <canvas id="lineChart"></canvas>
-                                </div>
-                                <div class="dynamic-info">
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <div class="dynamic-info__label">
-                                                Đang sử dụng
-                                            </div>
-                                            <div class="dynamic-info__param">
-                                                7%
-                                            </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="CPU" role="tabpanel"
+                                        aria-labelledby="CPU-tab">
+                                        <div class="chart">
+                                            <canvas id="CPU-Chart"></canvas>
                                         </div>
-                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <div class="dynamic-info__label">
-                                                Tốc độ
-                                            </div>
-                                            <div class="dynamic-info__param">
-                                                3.95 GHz
+                                        <div class="dynamic-info">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Đang sử dụng
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        7%
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Processes
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        245
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Threads
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        2860
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <div class="dynamic-info__label">
-                                                Processes
-                                            </div>
-                                            <div class="dynamic-info__param">
-                                                245
+                                    <div class="tab-pane fade" id="RAM" role="tabpanel" aria-labelledby="RAM-tab">
+                                        <div class="chart">
+                                            <canvas id="RAM-Chart"></canvas>
+                                        </div>
+                                        <div class="dynamic-info">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Đang sử dụng
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        6.2 GB
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Khả dụng
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        1.6 GB
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <div class="dynamic-info__label">
-                                                Threads
+                                    </div>
+                                    <div class="tab-pane fade" id="DISK" role="tabpanel" aria-labelledby="DISK-tab">
+                                        <div class="chart">
+                                            <canvas id="DISK-Chart"></canvas>
+                                        </div>
+                                        <div class="dynamic-info">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Đang sử dụng
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        30 GB
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Khả dụng
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        200 GB
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="dynamic-info__param">
-                                                2860
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="GPU" role="tabpanel" aria-labelledby="GPU-tab">
+                                        <div class="chart">
+                                            <canvas id="GPU-Chart"></canvas>
+                                        </div>
+                                        <div class="dynamic-info">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                    <div class="dynamic-info__label">
+                                                        Đang sử dụng
+                                                    </div>
+                                                    <div class="dynamic-info__param">
+                                                        30%
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="more" role="tabpanel" aria-labelledby="more-tab">
+                                        <div class="more mt-3">
+                                            <div class="more-heading">
+                                                <span class="more-heading__content">Hẹn giờ tắt máy</span>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input timer-btn" type="checkbox" id="flexSwitchCheckDefault"/>
+                                                </div>
+                                            </div>
+                                            <form action="" method="POST" class="more-form mt-3">
+                                                <div class="more-form__modal"></div>
+                                                <label class="more-form__label">
+                                                    Máy sẽ tắt sau
+                                                    <input type="text" name="min" id="" class="more-control">
+                                                    phút
+                                                </label>
+                                                <br><br>
+                                                <input type="submit" value="Lưu" class="btn">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -204,8 +292,13 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
+    <div class="message alert alert-danger alert-dismissible fade" role="alert">
+        <span class="message-content"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -220,13 +313,16 @@
 
     <!-- chart -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
     <script src="../general.js"></script>
     <script>
-        var ctxL = document.getElementById("lineChart").getContext('2d');
+        var ctxL = document.getElementById("CPU-Chart").getContext('2d');
         var myLineChart = new Chart(ctxL, {
             type: 'line',
             data: {
@@ -245,9 +341,132 @@
                 ]
             },
             options: {
-                responsive: true
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        stacked: true,
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            stepSize: 20,
+                        }
+                    }]
+                }
             }
         });
+        
+        var ram = document.getElementById("RAM-Chart").getContext('2d');
+        var RAMChart = new Chart(ram, {
+            type: 'line',
+            data: {
+                labels: ["60 seconds", "", "", "", "", "", "0"],
+                datasets: [{
+                    label: "Utilzation",
+                    data: [10, 30, 5, 40, 40, 20, 10],
+                    backgroundColor: [
+                        'rgba(152, 222, 217, .5)',
+                    ],
+                    borderColor: [
+                        'rgba(152, 222, 217, 1)',
+                    ],
+                    borderWidth: 2
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        stacked: true,
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            stepSize: 20,
+                        }
+                    }]
+                }
+            }
+        });
+
+        var DISK = document.getElementById("DISK-Chart").getContext('2d');
+        var DISKChart = new Chart(DISK, {
+            type: 'line',
+            data: {
+                labels: ["60 seconds", "", "", "", "", "", "0"],
+                datasets: [{
+                    label: "Utilzation",
+                    data: [10, 30, 30, 40, 40, 20, 10],
+                    backgroundColor: [
+                        'rgba(152, 222, 217, .5)',
+                    ],
+                    borderColor: [
+                        'rgba(152, 222, 217, 1)',
+                    ],
+                    borderWidth: 2
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        stacked: true,
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            stepSize: 20,
+                        }
+                    }]
+                }
+            }
+        });
+
+        var GPU = document.getElementById("GPU-Chart").getContext('2d');
+        var GPUChart = new Chart(GPU, {
+            type: 'line',
+            data: {
+                labels: ["60 seconds", "", "", "", "", "", "0"],
+                datasets: [{
+                    label: "Utilzation",
+                    data: [10, 30, 30, 40, 40, 20, 10],
+                    backgroundColor: [
+                        'rgba(152, 222, 217, .5)',
+                    ],
+                    borderColor: [
+                        'rgba(152, 222, 217, 1)',
+                    ],
+                    borderWidth: 2
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        stacked: true,
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            stepSize: 20,
+                        }
+                    }]
+                }
+            }
+        });
+
+        const timerBtn = document.querySelector('.timer-btn');
+        const moreFormModal = document.querySelector('.more-form__modal');
+        timerBtn.onchange = () => {
+            if (timerBtn.checked == true) {
+                moreFormModal.style.display = 'none';
+            } else {
+                moreFormModal.style.display = 'block';
+            }
+        }
     </script>
 </body>
 
