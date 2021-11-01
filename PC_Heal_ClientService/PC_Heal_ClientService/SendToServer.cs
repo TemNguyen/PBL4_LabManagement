@@ -14,15 +14,14 @@ namespace PC_Heal_ClientService
     {
         public static void Send(CI computer)
         {
-            var serverIP = IPAddress.Parse("192.168.0.104");
+            var serverIp = IPAddress.Parse("192.168.0.104");
             int serverPort = 5000;
 
             while (true)
             {
                 var client = new TcpClient();
-                client.Connect(serverIP, serverPort);
+                client.Connect(serverIp, serverPort);
                 var localEndpoint = client.Client.RemoteEndPoint as IPEndPoint;
-                Console.WriteLine("Connecting to " + localEndpoint.Address + ":" + localEndpoint.Port);
 
                 var stream = client.GetStream();
                 var writer = new StreamWriter(stream) { AutoFlush = true };

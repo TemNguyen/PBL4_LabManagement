@@ -14,9 +14,9 @@ namespace PC_Heal_ServerService
     public class Account
     {
         [Key]
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        [BsonElement("username")]
         public string Username { get; set; }
-        [BsonElement]
+        [BsonElement("password")]
         public string Password { get; set; }
     }
 }

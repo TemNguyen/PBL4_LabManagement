@@ -9,19 +9,19 @@ namespace PC_Heal_ClientService
     public class CI
     {
         public string ComputerName { get; set; }
-        public string GPUName { get; set; }
+        public string GpuName { get; set; }
         public string NumberOfLogicalProcessors { get; set; }
-        public string Chipset { get; set; }
-        public string RAM_Size { get; set; }
-        public string IPAddress { get; set; }
-        public string MACAddress { get; set; }
-        public string CPU_Usage { get; set; }
-        public string Max_Clock_Speed { get; set; }
-        public string Num_Thread { get; set; }
-        public string Num_Process { get; set; }
-        public string Disk_Usage { get; set; }
-        public string RAM_Usage { get; set; }
-        public string GPU_Usage { get; set; }
+        public string ChipSet { get; set; }
+        public string RamSize { get; set; }
+        public string IpAddress { get; set; }
+        public string MacAddress { get; set; }
+        public string CpuUsage { get; set; }
+        public string NumThread { get; set; }
+        public string NumProcess { get; set; }
+        public string DiskUsage { get; set; }
+        public string RamUsage { get; set; }
+        public string GpuUsage { get; set; }
+        public int ActiveTime{ get; set; }
         public bool IsOnline { get; set; }
     }
 }
