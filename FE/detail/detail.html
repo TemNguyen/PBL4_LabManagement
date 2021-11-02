@@ -110,7 +110,7 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="CPU" role="tabpanel"
+                                    <div class="tab-pane fade" id="CPU" role="tabpanel"
                                         aria-labelledby="CPU-tab">
                                         <div class="chart">
                                             <canvas id="CPU-Chart"></canvas>
@@ -211,7 +211,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="more" role="tabpanel" aria-labelledby="more-tab">
+                                    <div class="tab-pane fade show active" id="more" role="tabpanel" aria-labelledby="more-tab">
                                         <div class="more mt-3">
                                             <div class="more-heading">
                                                 <span class="more-heading__content">Hẹn giờ tắt máy</span>
@@ -221,13 +221,20 @@
                                             </div>
                                             <form action="" method="POST" class="more-form mt-3">
                                                 <div class="more-form__modal"></div>
-                                                <label class="more-form__label">
-                                                    Máy sẽ tắt sau
-                                                    <input type="text" name="min" id="" class="more-control">
-                                                    phút
-                                                </label>
-                                                <br><br>
+                                                <div class="more-group">
+                                                    <label class="more-form__label">
+                                                        Máy sẽ tắt sau
+                                                        <input type="text" name="min" id="time" class="more-control">
+                                                        phút
+                                                    </label>
+                                                    <br>
+                                                    <span class="more-message"></span>
+                                                </div>
+                                                <br>
                                                 <input type="submit" value="Lưu" class="btn">
+                                            </form>
+                                            <form action="" method="POST" class="cancel-form">
+                                                <input type="submit" value="Hủy" class="btn-cancel">
                                             </form>
                                         </div>
                                     </div>
@@ -321,9 +328,10 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
     <script src="../general.js"></script>
+    <script src="../validate.js"></script>
     <script>
-        var ctxL = document.getElementById("CPU-Chart").getContext('2d');
-        var myLineChart = new Chart(ctxL, {
+        var CPU = document.getElementById("CPU-Chart").getContext('2d');
+        var CPUChart = new Chart(CPU, {
             type: 'line',
             data: {
                 labels: ["60 seconds", "", "", "", "", "", "0"],
@@ -465,8 +473,21 @@
                 moreFormModal.style.display = 'none';
             } else {
                 moreFormModal.style.display = 'block';
+                document.querySelector('.more-group').classList.remove('invalid');
+                document.querySelector('.more-control').value = '';
+                document.querySelector('.more-message').innerText = '';
             }
         }
+
+        Validator({
+            form: '.more-form',
+            formGroupSelector: '.more-group',
+            errorSelector: '.more-message',
+            rules: [
+                Validator.isRequired('#time'),
+                Validator.isNumber('#time'),
+            ],
+        });
     </script>
 </body>
 

@@ -76,7 +76,7 @@
                                     Máy đang hoạt động
                                 </span>
                                 <canvas class="pc-working__chart" id="doughnutChart"></canvas>
-                                <span class="pc-working__percent">80%</span>
+                                <span class="pc-working__percent"><span class="percent">100</span>%</span>
                             </div>
 
                         </div>
@@ -134,6 +134,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <script src="../general.js"></script>
     <script>
+        const workingPercent = document.querySelector('.pc-working__percent');
+        console.log(workingPercent);
+        if (parseInt(workingPercent.innerText) == 100) {
+            workingPercent.style.right = '42.7%';
+        }
         // chart
         var ctxD = document.getElementById("doughnutChart").getContext('2d');
         var myLineChart = new Chart(ctxD, {
@@ -162,6 +167,10 @@
                 time: 500
             });
             $('.second').counterUp({
+                delay: 10,
+                time: 500
+            });
+            $('.percent').counterUp({
                 delay: 10,
                 time: 500
             });

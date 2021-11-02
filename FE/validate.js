@@ -150,6 +150,16 @@ Validator.isConfirmed = function(selector, getRePass, message) {
     }
 }
 
+Validator.isNumber = function(selector) {
+    return {
+        selector: selector,
+        test: function(value) {
+            var regex = /^\d+$/;
+            return regex.test(value) ? undefined : 'Trường này chỉ bao gồm số';
+        }
+    };
+}
+
 // Config
 /*
 Validator({
