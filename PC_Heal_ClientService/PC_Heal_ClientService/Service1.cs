@@ -6,10 +6,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Net.Sockets;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace PC_Heal_ClientService
 {
@@ -17,6 +20,7 @@ namespace PC_Heal_ClientService
     {
         Timer _timer = null;
         private static int _activeTime;
+        private static TcpClient _client = new TcpClient();
         public Service1()
         {
             InitializeComponent();
@@ -27,13 +31,13 @@ namespace PC_Heal_ClientService
         {
             _activeTime = 0;
             _timer = new Timer();
-            _timer.Interval = 1000;
+            _timer.Interval = 1500;
             _timer.Elapsed += Timer_Elapsed;
             _timer.Enabled = true;
             
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private static async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             _activeTime++;
             try
@@ -41,7 +45,7 @@ namespace PC_Heal_ClientService
                 CI computer = GetComputerInformation();
                 computer.ActiveTime = _activeTime;
                 computer.IsOnline = true;
-                SendToServer.Send(computer);
+                await SendToServer.Send(computer);
             }
             catch (Exception)
             {
@@ -49,33 +53,6 @@ namespace PC_Heal_ClientService
             }
         }
 
-        protected override void OnStop()
-        {
-            try
-            {
-                CI computer = GetComputerInformation();
-                computer.IsOnline = false;
-                SendToServer.Send(computer);
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        protected override void OnShutdown()
-        {
-            try
-            {
-                CI computer = GetComputerInformation();
-                computer.IsOnline = false;
-                SendToServer.Send(computer);
-            }
-            catch (Exception)
-            {
-
-            }
-        }
         static CI GetComputerInformation()
         {
             var computerInformation = new CI();
@@ -165,7 +142,7 @@ namespace PC_Heal_ClientService
                     foreach (var item in disk)
                     {
                         var usage = double.Parse(item["FreeSpace"].ToString()) / double.Parse(item["Capacity"].ToString());
-                        computerInformation.DiskUsage = (usage * 100).ToString("00.00");
+                        computerInformation.DiskUsage = Convert.ToInt32(usage * 100);
                     }
                 }
                 catch (Exception)
@@ -187,7 +164,7 @@ namespace PC_Heal_ClientService
                         n++;
                     }
 
-                    computerInformation.CpuUsage = String.Format("{0:0.0}", total / n);
+                    computerInformation.CpuUsage = Convert.ToInt32(total / n);
                 }
                 catch (Exception)
                 {
@@ -214,8 +191,8 @@ namespace PC_Heal_ClientService
                     
                 }
 
-                computerInformation.NumThread = threads.ToString();
-                computerInformation.NumProcess = process.ToString();
+                computerInformation.NumThread = threads;
+                computerInformation.NumProcess = process;
             }
 
             using (var ram = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_OperatingSystem").Get())
@@ -224,8 +201,9 @@ namespace PC_Heal_ClientService
                 {
                     foreach (var item in ram)
                     {
-                        computerInformation.RamSize = (double.Parse(item["TotalVisibleMemorySize"].ToString()) / (1024*1024)).ToString("00.");
-                        computerInformation.RamUsage = (int.Parse(computerInformation.RamSize) - double.Parse(item["FreePhysicalMemory"].ToString()) / (1024*1024)).ToString("00.0");
+                        computerInformation.RamSize = Convert.ToInt32(double.Parse(item["TotalVisibleMemorySize"].ToString()) / (1024 * 1024));
+                        var ramUsage = Convert.ToDouble(computerInformation.RamSize - (double.Parse(item["FreePhysicalMemory"].ToString()) / (1024 * 1024)));
+                        computerInformation.RamUsage = Math.Round(ramUsage, 1);
                     }
                 }
                 catch (Exception)
@@ -237,13 +215,37 @@ namespace PC_Heal_ClientService
             try
             {
                 var category = new PerformanceCounterCategory("GPU Engine");
-                var gpuCounter = category.GetCounters("Utilization Percentage");
-                foreach (var item in gpuCounter)
+                var counterNames = category.GetInstanceNames();
+                var gpuCounters = new List<PerformanceCounter>();
+                var result = 0f;
+
+                foreach (string counterName in counterNames)
                 {
-                    computerInformation.GpuUsage = item.NextValue().ToString("00.00");
+                    if (counterName.EndsWith("engtype_3D"))
+                    {
+                        foreach (PerformanceCounter counter in category.GetCounters(counterName))
+                        {
+                            if (counter.CounterName == "Utilization Percentage")
+                            {
+                                gpuCounters.Add(counter);
+                            }
+                        }
+                    }
                 }
+
+                gpuCounters.ForEach(x =>
+                {
+                    _ = x.NextValue();
+                });
+
+                gpuCounters.ForEach(x =>
+                {
+                    result += x.NextValue();
+                });
+
+                computerInformation.GpuUsage = Convert.ToInt32(result);
             }
-            catch (Exception)
+            catch(Exception)
             {
 
             }

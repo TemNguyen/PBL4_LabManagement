@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -12,24 +14,23 @@ namespace PC_Heal_ClientService
 {
     public class SendToServer
     {
-        public static void Send(CI computer)
+        //private static ManualResetEvent connectDone = new ManualResetEvent(false);
+        //private static ManualResetEvent sendDone = new ManualResetEvent(false);
+
+        public static async Task Send(CI computerInfo)
         {
             var serverIp = IPAddress.Parse("192.168.0.104");
-            int serverPort = 5000;
+            var serverPort = 5000;
 
-            while (true)
-            {
-                var client = new TcpClient();
-                client.Connect(serverIp, serverPort);
-                var localEndpoint = client.Client.RemoteEndPoint as IPEndPoint;
+            TcpClient client = new TcpClient();
+            await client.ConnectAsync(serverIp, serverPort);
 
-                var stream = client.GetStream();
-                var writer = new StreamWriter(stream) { AutoFlush = true };
+            var stream = client.GetStream();
+            var writer = new StreamWriter(stream) { AutoFlush = true };
 
-                var computerInfo = computer;
-                var serializer = new JsonSerializer();
-                serializer.Serialize(writer, computerInfo);
-            }
+            var serializer = new JsonSerializer();
+            serializer.Serialize(writer, computerInfo);
+
         }
     }
 }

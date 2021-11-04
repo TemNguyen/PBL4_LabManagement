@@ -25,66 +25,122 @@ namespace PC_Heal_ServerService
     {
         const int PortNumber = 5000;
         static TcpListener _listener;
+        private System.Timers.Timer timer = null;
 
         static readonly MongoClient _mongoClient = new MongoClient("mongodb+srv://ndthinhdut19:pbl2021mongodb@labmanagementdb.j4waq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
         static IMongoDatabase _mongoDatabase = _mongoClient.GetDatabase("LabManagementDatabase");
         static IMongoCollection<BsonDocument> _mongoCollection = null;
 
+        private static Dictionary<string, TcpClient> _currentClients = new Dictionary<string, TcpClient>();
+        private static HashSet<string> _totalClients = new HashSet<string>();
+
         public Service1()
         {
             InitializeComponent();
+            InitDefaultAccount();
         }
 
-        protected override async void OnStart(string[] args)
+        protected override void OnStart(string[] args)
         {
-            try
+            timer = new System.Timers.Timer();
+            //check every 10s
+            timer.Interval = 10000;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Enabled = true;
+            //start new thread to handle
+            new Thread(StartListening).Start();
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            foreach (var client in _totalClients)
+            {
+                if (IsClientDispose(_currentClients[client]))
+                {
+                    try
+                    {
+                        _mongoCollection = _mongoDatabase.GetCollection<BsonDocument>("devices");
+                        var filter = Builders<BsonDocument>.Filter.Eq("IPAddress", client);
+                        var computerInDb = _mongoCollection.Find(filter).FirstOrDefault();
+
+                        try
+                        {
+                            var update = Builders<BsonDocument>.Update.Set("isOnline", false);
+                            _mongoCollection.UpdateOne(filter, update);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private void StartListening()
+        {
+            _listener = new TcpListener(IPAddress.Any, PortNumber);
+            _listener.Start(100);
+
+            while (true)
             {
                 try
                 {
-                    //init default Account
-                    _mongoCollection = _mongoDatabase.GetCollection<BsonDocument>("accounts");
+                    var client = _listener.AcceptTcpClient();
+                    //get remoteIP
+                    var remoteIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
+                    _totalClients.Add(remoteIP);
 
-                    var key = Builders<BsonDocument>.IndexKeys.Ascending("computerName");
-                    var indexOption = new CreateIndexOptions() { Unique = true };
-                    var model = new CreateIndexModel<BsonDocument>(key, indexOption);
-                    await _mongoCollection.Indexes.CreateOneAsync(model);
-
-                    var defaultAccount = new Account
+                    if (_currentClients.ContainsKey(remoteIP))
                     {
-                        Username = "admin",
-                        Password = "admin"
-                    };
-                    var document = defaultAccount.ToBsonDocument();
-                    await _mongoCollection.InsertOneAsync(document);
+                        _currentClients[remoteIP] = client;
+                    }
+                    else
+                    {
+                        _currentClients.Add(remoteIP, client);
+                    }
+
+                    new Thread(SaveData).Start(client);
+
+
+                }
+                catch (SocketException)
+                {
+
                 }
                 catch (Exception)
                 {
 
                 }
-
-                _listener = new TcpListener(IPAddress.Any, PortNumber);
-                _listener.Start();
-
-                while (true)
-                {
-                    var client = _listener.AcceptTcpClient();
-                    await SaveData(client);
-                }
             }
-            catch (Exception)
+        }
+
+        static bool IsClientDispose(TcpClient client)
+        {
+            var s = client.Client;
+            bool part1, part2;
+            try
             {
-                _listener.Stop();
+                part1 = s.Poll(1000, SelectMode.SelectRead);
+                part2 = (s.Available == 0);
             }
+            catch (Exception e)
+            {
+                return true;
+            }
+            if (part1 && part2)
+                return true;
+            else
+                return false;
         }
 
-        protected override void OnStop()
+        static void SaveData(object state)
         {
-
-        }
-
-        static async Task SaveData(TcpClient client)
-        {
-            await Task.Yield();
+            var client = state as TcpClient;
             try
             {
                 var stream = client.GetStream();
@@ -120,7 +176,7 @@ namespace PC_Heal_ServerService
                         var key = Builders<BsonDocument>.IndexKeys.Ascending("computerName");
                         var indexOption = new CreateIndexOptions() { Unique = true };
                         var model = new CreateIndexModel<BsonDocument>(key, indexOption);
-                        await _mongoCollection.Indexes.CreateOneAsync(model);
+                        _mongoCollection.Indexes.CreateOne(model);
                     }
                     catch (Exception)
                     {
@@ -129,13 +185,13 @@ namespace PC_Heal_ServerService
 
                     var document = data.ToBsonDocument();
                     var filter = Builders<BsonDocument>.Filter.Eq("computerName", data.ComputerName);
-                    var computerInDb = await _mongoCollection.Find(filter).FirstOrDefaultAsync();
+                    var computerInDb = _mongoCollection.Find(filter).FirstOrDefault();
 
                     if (computerInDb == null)
                     {
                         try
                         {
-                            await _mongoCollection.InsertOneAsync(document);
+                            _mongoCollection.InsertOne(document);
                         }
                         catch (Exception)
                         {
@@ -154,7 +210,7 @@ namespace PC_Heal_ServerService
                                 .Set("GPUUsage", data.GpuUsage)
                                 .Set("activeTime", data.ActiveTime)
                                 .Set("isOnline", data.IsOnline);
-                            await _mongoCollection.UpdateOneAsync(filter, update);
+                            _mongoCollection.UpdateOne(filter, update);
 
                         }
                         catch (Exception)
@@ -169,6 +225,42 @@ namespace PC_Heal_ServerService
                 }
 
                 stream.Close();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        static void InitDefaultAccount()
+        {
+            try
+            {
+                //init default Account
+                _mongoCollection = _mongoDatabase.GetCollection<BsonDocument>("accounts");
+
+                var key = Builders<BsonDocument>.IndexKeys.Ascending("username");
+                var indexOption = new CreateIndexOptions() { Unique = true };
+                var model = new CreateIndexModel<BsonDocument>(key, indexOption);
+                _mongoCollection.Indexes.CreateOne(model);
+
+                var defaultAccount = new Account { Username = "admin", Password = "admin" };
+                var document = defaultAccount.ToBsonDocument();
+
+                var filter = Builders<BsonDocument>.Filter.Eq("username", defaultAccount.Username);
+                var computerInDb = _mongoCollection.Find(filter).FirstOrDefault();
+
+                if (computerInDb == null)
+                {
+                    try
+                    {
+                        _mongoCollection.InsertOne(document);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
             }
             catch (Exception)
             {

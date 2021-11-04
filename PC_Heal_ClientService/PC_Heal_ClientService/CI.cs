@@ -12,15 +12,15 @@ namespace PC_Heal_ClientService
         public string GpuName { get; set; }
         public string NumberOfLogicalProcessors { get; set; }
         public string ChipSet { get; set; }
-        public string RamSize { get; set; }
+        public int RamSize { get; set; }
         public string IpAddress { get; set; }
         public string MacAddress { get; set; }
-        public string CpuUsage { get; set; }
-        public string NumThread { get; set; }
-        public string NumProcess { get; set; }
-        public string DiskUsage { get; set; }
-        public string RamUsage { get; set; }
-        public string GpuUsage { get; set; }
+        public int CpuUsage { get; set; }
+        public int NumThread { get; set; }
+        public int NumProcess { get; set; }
+        public int DiskUsage { get; set; }
+        public double RamUsage { get; set; }
+        public int GpuUsage { get; set; }
         public int ActiveTime{ get; set; }
         public bool IsOnline { get; set; }
     }

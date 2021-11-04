@@ -29,8 +29,15 @@ namespace PC_Heal_ServerService
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            // 
+            // Service1
+            // 
+            this.CanHandlePowerEvent = true;
+            this.CanHandleSessionChangeEvent = true;
+            this.CanPauseAndContinue = true;
+            this.CanShutdown = true;
             this.ServiceName = "Service1";
+
         }
 
         #endregion
