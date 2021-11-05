@@ -70,10 +70,19 @@
     display: none;
     font-size: 12px;
     line-height: 16px;
-    padding: 4px 0 0;
+    padding-top: 4px;
     color: var(--color-red);
 }
 
 .cancel-form {
     transform: translate(120px, -46px);
+}
+
+.more-status {
+    font-size: 14px;
+    color: var(--color-red);
+}
+
+.more-status.hide {
+    display: none;
 }

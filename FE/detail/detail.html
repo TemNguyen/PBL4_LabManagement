@@ -110,8 +110,7 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade" id="CPU" role="tabpanel"
-                                        aria-labelledby="CPU-tab">
+                                    <div class="tab-pane fade" id="CPU" role="tabpanel" aria-labelledby="CPU-tab">
                                         <div class="chart">
                                             <canvas id="CPU-Chart"></canvas>
                                         </div>
@@ -211,12 +210,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade show active" id="more" role="tabpanel" aria-labelledby="more-tab">
+                                    <div class="tab-pane fade show active" id="more" role="tabpanel"
+                                        aria-labelledby="more-tab">
                                         <div class="more mt-3">
                                             <div class="more-heading">
                                                 <span class="more-heading__content">Hẹn giờ tắt máy</span>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input timer-btn" type="checkbox" id="flexSwitchCheckDefault"/>
+                                                    <input class="form-check-input timer-btn" type="checkbox"
+                                                        id="flexSwitchCheckDefault" />
                                                 </div>
                                             </div>
                                             <form action="" method="POST" class="more-form mt-3">
@@ -236,6 +237,9 @@
                                             <form action="" method="POST" class="cancel-form">
                                                 <input type="submit" value="Hủy" class="btn-cancel">
                                             </form>
+                                            <div class="more-status hide">
+                                                Máy sẽ tắt sau 10 phút kể từ 15:38 11/3/2021
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -363,7 +367,7 @@
                 }
             }
         });
-        
+
         var ram = document.getElementById("RAM-Chart").getContext('2d');
         var RAMChart = new Chart(ram, {
             type: 'line',
@@ -468,6 +472,7 @@
 
         const timerBtn = document.querySelector('.timer-btn');
         const moreFormModal = document.querySelector('.more-form__modal');
+        const moreStatus = document.querySelector('.more-status');
         timerBtn.onchange = () => {
             if (timerBtn.checked == true) {
                 moreFormModal.style.display = 'none';
@@ -476,6 +481,9 @@
                 document.querySelector('.more-group').classList.remove('invalid');
                 document.querySelector('.more-control').value = '';
                 document.querySelector('.more-message').innerText = '';
+                if (moreStatus.classList.contains('hide') == false) {
+                    moreStatus.classList.add('hide');
+                }
             }
         }
 
