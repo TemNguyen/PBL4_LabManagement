@@ -76,9 +76,8 @@
                                     Máy đang hoạt động
                                 </span>
                                 <canvas class="pc-working__chart" id="doughnutChart"></canvas>
-                                <span class="pc-working__percent"><span class="percent">100</span>%</span>
+                                <span class="pc-working__percent"><span class="percent">80</span>%</span>
                             </div>
-
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                             <div class="main-right__content">
@@ -135,9 +134,13 @@
     <script src="../general.js"></script>
     <script>
         const workingPercent = document.querySelector('.pc-working__percent');
-        console.log(workingPercent);
-        if (parseInt(workingPercent.innerText) == 100) {
+        const percent = document.querySelector('.percent');
+
+        if (parseInt(percent.innerText) == 100) {
             workingPercent.style.right = '42.7%';
+        }
+        if (parseInt(percent.innerText) == 0) {
+            workingPercent.style.right = '45.5%';
         }
         // chart
         var ctxD = document.getElementById("doughnutChart").getContext('2d');

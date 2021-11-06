@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu - Liên hệ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link rel="stylesheet" href="../general.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div class="app">
+        <ul class="main-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-item__link nav-item__logo">LOGO</a>
+            </li>
+        </ul>
+
+        <div class="main container-fluid">
+            <div class="main-content">
+                <ul class="about-tab">
+                    <li class="about-item active">
+                        <a href="" class="about-item__link">Giới thiệu</a>
+                    </li>
+                    <li class="about-item">
+                        <a href="" class="about-item__link">Liên hệ</a>
+                    </li>
+                </ul>
+                <div class="about-content">
+                    <div class="about-pane active">
+                        <p class="about-content__header">
+                            PBL4: Hệ điều hành và mạng máy tính
+                        </p>
+                        <span>
+                            Đề tài: <br> <b>Website quản lí tài nguyên phần cứng <br> trong mạng LAN</b>
+                            <br> Giảng viên hướng dẫn: <b>Lê Trần Đức</b>
+                            Sinh viên thực hiện: <b>Võ Văn Thành <br> Nguyễn Duy Thịnh</b>
+                        </span>
+                    </div>
+                    <div class="about-pane">
+                        <div class="about-contact">
+                            <div class="about-contact__name">Võ Văn Thành</div>
+                            <div class="about-contact__email">
+                                <i class="far fa-envelope about-contact__icon"></i>
+                                thanhvo618@gmail.com
+                            </div>
+                            <div class="about-contact__phone">
+                                <i class="fas fa-phone-alt about-contact__icon"></i>
+                                0782 378 407
+                            </div>
+                            <div class="about-contact__social">
+                                <a class="about-contact__link" href="https://www.facebook.com/jThanh8144/">
+                                    <i class="fab fa-facebook about-contact__icon"></i>
+                                </a>
+                                <a class="about-contact__link" href="https://www.instagram.com/jThanh8144/">
+                                    <i class="fab fa-instagram about-contact__icon"></i>
+                                </a>
+                                <a class="about-contact__link" href="https://github.com/jthanh8144">
+                                    <i class="fab fa-github about-contact__icon"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="about-contact">
+                            <div class="about-contact__name">Nguyễn Duy Thịnh</div>
+                            <div class="about-contact__email">
+                                <i class="far fa-envelope about-contact__icon"></i>
+                                temthinh30012001@gmail.com
+                            </div>
+                            <div class="about-contact__phone">
+                                <i class="fas fa-phone-alt about-contact__icon"></i>
+                                0334 487 232
+                            </div>
+                            <div class="about-contact__social">
+                                <a class="about-contact__link" href="https://www.facebook.com/Tem.violet">
+                                    <i class="fab fa-facebook about-contact__icon"></i>
+                                </a>
+                                <a class="about-contact__link" href="https://github.com/TemNguyen">
+                                    <i class="fab fa-github about-contact__icon"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.about-item');
+        const panes = document.querySelectorAll('.about-pane');
+        tabs.forEach((tab, index) => {
+            const pane = panes[index];
+            tab.onclick = function (e) {
+                e.preventDefault();
+                document.querySelector('.about-item.active').classList.remove('active');
+                this.classList.add('active');
+                document.querySelector('.about-pane.active').classList.remove('active');
+                pane.classList.add('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
