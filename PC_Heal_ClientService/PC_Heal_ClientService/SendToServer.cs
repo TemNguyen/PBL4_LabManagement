@@ -14,8 +14,6 @@ namespace PC_Heal_ClientService
 {
     public class SendToServer
     {
-        //private static ManualResetEvent connectDone = new ManualResetEvent(false);
-        //private static ManualResetEvent sendDone = new ManualResetEvent(false);
 
         public static async Task Send(CI computerInfo)
         {

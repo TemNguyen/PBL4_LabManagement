@@ -129,7 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
-    <Compile Include="BLL\BLL.cs" />
+    <Compile Include="BLL\MongoDb.cs" />
+    <Compile Include="BLL\SQL.cs" />
     <Compile Include="CI.cs" />
     <Compile Include="DAL\CIDbContext.cs" />
     <Compile Include="DAL\CIInitializer.cs" />

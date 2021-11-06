@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace PC_Heal_ServerService.BLL
 {
-    class BLL
+    class SQL
     {
-        public static BLL Instance
+        public static SQL Instance
         {
             get
             {
-                if (_Instance == null)
+                if (_instance == null)
                 {
-                    _Instance = new BLL();
+                    _instance = new SQL();
                 }
-                return _Instance;
+                return _instance;
             }
             private set
             {
             }
         }
-        private static BLL _Instance;
-        private BLL()
+        private static SQL _instance;
+        private SQL()
         {
 
         }

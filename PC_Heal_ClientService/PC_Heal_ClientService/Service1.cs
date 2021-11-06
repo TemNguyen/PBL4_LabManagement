@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Management;
-using System.Net.Sockets;
+using System.Net.NetworkInformation;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -20,11 +13,9 @@ namespace PC_Heal_ClientService
     {
         Timer _timer = null;
         private static int _activeTime;
-        private static TcpClient _client = new TcpClient();
         public Service1()
         {
             InitializeComponent();
-            CanShutdown = true;
         }
 
         protected override void OnStart(string[] args)
@@ -49,13 +40,14 @@ namespace PC_Heal_ClientService
             }
             catch (Exception)
             {
-
+                //ignore
             }
         }
 
         static CI GetComputerInformation()
         {
             var computerInformation = new CI();
+
             using (var computer = new System.Management.ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get())
             {
                 try
@@ -68,7 +60,7 @@ namespace PC_Heal_ClientService
                 }
                 catch (Exception)
                 {
-                    
+                    //ignore
                 }
 
             }
@@ -93,45 +85,43 @@ namespace PC_Heal_ClientService
             {
                 try
                 {
-                    string gpu_Name = "";
+                    string gpuName = "";
                     foreach (var item in gpu)
                     {
-                        gpu_Name += item["Name"].ToString() + ",";
+                        gpuName += item["Name"].ToString() + ", ";
                     }
-                    computerInformation.GpuName = gpu_Name.Substring(0, gpu_Name.Length - 1);
+                    computerInformation.GpuName = gpuName.Substring(0, gpuName.Length - 1);
                 }
                 catch (Exception)
                 {
-
-
+                    //ignore
                 }
             }
 
-            string IP = String.Empty;
-            string MAC = String.Empty;
-
+            string ip = String.Empty;
+            string mac = String.Empty;
             using (var network = new ManagementClass("Win32_NetworkAdapterConfiguration"))
             {
                 try
                 {
                     foreach (var item in network.GetInstances())
                     {
-                        if (MAC == String.Empty)
+                        if (mac == String.Empty)
                         {
                             if ((bool)item["IPEnabled"] == true)
                             {
-                                MAC = item["MACAddress"].ToString();
-                                String[] IPs = (String[])item["IPAddress"];
-                                IP = IPs[0];
+                                mac = item["MACAddress"].ToString();
+                                String[] ips = (String[]) item["IPAddress"];
+                                ip = ips[0];
                             }
                         }
                     }
-                    computerInformation.IpAddress = IP;
-                    computerInformation.MacAddress = MAC;
+                    computerInformation.IpAddress = ip;
+                    computerInformation.MacAddress = mac;
                 }
                 catch (Exception)
                 {
-
+                    //ignore
                 }
             }
 
@@ -147,7 +137,7 @@ namespace PC_Heal_ClientService
                 }
                 catch (Exception)
                 {
-                    
+                    //ignore
                 }
             }
 
@@ -168,13 +158,12 @@ namespace PC_Heal_ClientService
                 }
                 catch (Exception)
                 {
-                    //
+                    //ignore
                 }
             }
 
             int process = 0;
             int threads = 0;
-
             using(var thread = new ManagementObjectSearcher("select * from Win32_Process").Get())
             {
                 try
@@ -187,10 +176,8 @@ namespace PC_Heal_ClientService
                 }
                 catch (Exception)
                 {
-
-                    
+                    //ignore
                 }
-
                 computerInformation.NumThread = threads;
                 computerInformation.NumProcess = process;
             }
@@ -208,7 +195,7 @@ namespace PC_Heal_ClientService
                 }
                 catch (Exception)
                 {
-                    //
+                    //ignore
                 }
             }
             //GPU usage
@@ -218,7 +205,6 @@ namespace PC_Heal_ClientService
                 var counterNames = category.GetInstanceNames();
                 var gpuCounters = new List<PerformanceCounter>();
                 var result = 0f;
-
                 foreach (string counterName in counterNames)
                 {
                     if (counterName.EndsWith("engtype_3D"))
@@ -247,7 +233,7 @@ namespace PC_Heal_ClientService
             }
             catch(Exception)
             {
-
+                //ignore
             }
 
             return computerInformation;
