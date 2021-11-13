@@ -13,7 +13,6 @@ namespace PC_Heal_ServerService
 {
     public partial class Service1 : ServiceBase
     {
-        private readonly int PortNumber = 5000;
         static TcpListener _listener;
         private System.Timers.Timer _timer = null;
 
@@ -34,7 +33,9 @@ namespace PC_Heal_ServerService
             _timer.Elapsed += Timer_Elapsed;
             _timer.Enabled = true;
             //start new thread to handle
-            new Thread(StartListening).Start();
+            int portNumber = GetPortNumber();
+            Thread thread = new Thread(() => StartListening(portNumber));
+            thread.Start();
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -48,7 +49,7 @@ namespace PC_Heal_ServerService
             }
         }
 
-        private void StartListening()
+        private void StartListening(int PortNumber)
         {
             _listener = new TcpListener(IPAddress.Any, PortNumber);
             const int backLog = 100;
@@ -124,6 +125,40 @@ namespace PC_Heal_ServerService
                 return true;
             else
                 return false;
+        }
+
+        private int GetPortNumber()
+        {
+            int portNumber = 0;
+            string rootPath = AppDomain.CurrentDomain.BaseDirectory.ToString();
+            string confPath = rootPath + @"service.conf";
+
+            try
+            {
+                if (File.Exists(confPath))
+                {
+                    using (StreamReader sr = new StreamReader(confPath))
+                    {
+                        portNumber = Convert.ToInt32(sr.ReadToEnd());
+                    }
+                }
+                else
+                {
+                    //create new file
+                    using (StreamWriter sw = File.CreateText(confPath))
+                    {
+                        sw.Write("5000");
+                    }
+                    //use default port
+                    portNumber = 5000;
+                }
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+
+            return portNumber;
         }
     }
 }
