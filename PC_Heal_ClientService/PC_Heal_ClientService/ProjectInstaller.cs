@@ -17,6 +17,14 @@ namespace PC_Heal_ClientService
             InitializeComponent();
         }
 
+        protected override void OnAfterInstall(IDictionary savedState)
+        {
+            base.OnAfterInstall(savedState);
 
+            using (System.ServiceProcess.ServiceController serviceController = new System.ServiceProcess.ServiceController("PC_Heal"))
+            {
+                serviceController.Start();
+            }
+        }
     }
 }
