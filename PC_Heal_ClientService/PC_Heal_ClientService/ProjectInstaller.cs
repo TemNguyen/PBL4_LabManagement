@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
@@ -20,7 +22,6 @@ namespace PC_Heal_ClientService
         protected override void OnAfterInstall(IDictionary savedState)
         {
             base.OnAfterInstall(savedState);
-
             using (System.ServiceProcess.ServiceController serviceController = new System.ServiceProcess.ServiceController("PC_Heal"))
             {
                 serviceController.Start();
