@@ -28,11 +28,11 @@ namespace PC_Heal_ServerService
         protected override void OnStart(string[] args)
         {
             _timer = new System.Timers.Timer();
-            //check every 10s
+            //check is socket dispose every 10s
             _timer.Interval = 10000;
             _timer.Elapsed += Timer_Elapsed;
             _timer.Enabled = true;
-            //start new thread to handle
+            //start new thread to avoid starting state on service.
             int portNumber = GetPortNumber();
             Thread thread = new Thread(() => StartListening(portNumber));
             thread.Start();
@@ -49,9 +49,9 @@ namespace PC_Heal_ServerService
             }
         }
 
-        private void StartListening(int PortNumber)
+        private void StartListening(int portNumber)
         {
-            _listener = new TcpListener(IPAddress.Any, PortNumber);
+            _listener = new TcpListener(IPAddress.Any, portNumber);
             const int backLog = 100;
             _listener.Start(backLog);
 
@@ -72,7 +72,7 @@ namespace PC_Heal_ServerService
                     {
                         _currentClients.Add(remoteIP, client);
                     }
-
+                    //multi thread
                     new Thread(SaveData).Start(client);
                 }
                 catch (SocketException)
@@ -91,15 +91,18 @@ namespace PC_Heal_ServerService
             var client = state as TcpClient;
             try
             {
-                var stream = client.GetStream();
-                var reader = new StreamReader(stream);
+                if (client != null)
+                {
+                    var stream = client.GetStream();
+                    var reader = new StreamReader(stream);
 
-                var serializer = new JsonSerializer();
-                var data = serializer.Deserialize(reader, typeof(CI)) as CI;
+                    var serializer = new JsonSerializer();
+                    var data = serializer.Deserialize(reader, typeof(CI)) as CI;
 
-                BLL.MongoDb.Instance.Save(data);
+                    BLL.MongoDb.Instance.Save(data);
 
-                stream.Close();
+                    stream.Close();
+                }
             }
             catch (Exception)
             {

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Management;
 using System.Net.NetworkInformation;
 using System.ServiceProcess;
+using System.Threading.Tasks;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -90,7 +91,7 @@ namespace PC_Heal_ClientService
                     {
                         gpuName += item["Name"].ToString() + ", ";
                     }
-                    computerInformation.GpuName = gpuName.Substring(0, gpuName.Length - 1);
+                    computerInformation.GpuName = gpuName.Substring(0, gpuName.Length - 2);
                 }
                 catch (Exception)
                 {
