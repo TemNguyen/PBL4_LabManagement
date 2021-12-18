@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+        <div class="main-right__content">
+            <span class="main-right__title">
+                Máy đang hoạt động
+            </span>
+            <canvas class="pc-working__chart" id="doughnutChart"></canvas>
+            <span class="pc-working__percent"><span class="percent"></span>%</span>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+        <div class="main-right__content">
+            <span class="main-right__title">
+                Tổng số giờ hoạt động
+            </span>
+            <div class="circle">
+                <div>
+                    <span class="hour">{{ data.hour }}</span>h
+                </div>
+                <div>
+                    <span class="min">{{ data.min }}</span>m
+                </div>
+                <div>
+                    <span class="second">{{ data.second }}</span>s
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const workingPercent = document.querySelector('.pc-working__percent');
+        const percent = document.querySelector('.percent');
+
+        percent.innerText = {{data.percent}} || 0;
+
+        if (parseInt(percent.innerText) == 100) {
+            workingPercent.style.right = '42.7%';
+        }
+        if (parseInt(percent.innerText) == 0) {
+            workingPercent.style.right = '45.5%';
+        }
+
+        // chart
+        var ctxD = document.getElementById("doughnutChart").getContext('2d');
+        var myLineChart = new Chart(ctxD, {
+            type: 'doughnut',
+            data: {
+                labels: ["Đang hoạt động", "Không hoạt động"],
+                datasets: [{
+                    data: [{{ data.percent }} == NaN ? 0 : {{ data.percent }}, {{ sub 100 data.percent }} == NaN ? 100 : {{ sub 100 data.percent }}],
+                    backgroundColor: ["#ACFCDA", "#949FB1"],
+                    hoverBackgroundColor: ["#C7FFD8", "#A8B3C5"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // count up
+        jQuery(document).ready(function ($) {
+            $('.hour').counterUp({
+                delay: 10,
+                time: 500
+            });
+            $('.min').counterUp({
+                delay: 10,
+                time: 500
+            });
+            $('.second').counterUp({
+                delay: 10,
+                time: 500
+            });
+            $('.percent').counterUp({
+                delay: 10,
+                time: 500
+            });
+        });
+    });
+</script>

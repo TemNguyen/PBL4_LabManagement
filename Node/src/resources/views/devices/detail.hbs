@@ -1,0 +1,463 @@
+<div class="detail__heading">
+    <span class="detail__content">{{ device.computerName }}</span>
+</div>
+<a href="/devices" class="btn-back">
+    <i class="fas fa-chevron-left btn-back__icon"></i>
+    Trở về
+</a>
+<div class="main-right__content">
+    <div class="row mt-2">
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link{{ cpuActive }}" href="#CPU" id="CPU-tab" data-toggle="tab" role="tab"
+                        aria-controls="CPU" aria-selected="true">CPU</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#RAM" id="RAM-tab" data-toggle="tab" role="tab" aria-controls="RAM"
+                        aria-selected="false">RAM</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#DISK" id="DISK-tab" data-toggle="tab" role="tab" aria-controls="DISK"
+                        aria-selected="false">DISK</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#GPU" id="GPU-tab" data-toggle="tab" role="tab" aria-controls="GPU"
+                        aria-selected="false">GPU</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{{ moreActive }}" href="#more" id="more-tab" data-toggle="tab" role="tab"
+                        aria-controls="more" aria-selected="false">Thêm</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade{{ cpuContent }}" id="CPU" role="tabpanel" aria-labelledby="CPU-tab">
+                    <div class="chart">
+                        <canvas id="CPU-Chart"></canvas>
+                    </div>
+                    <div class="dynamic-info">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <div class="dynamic-info__label">
+                                    Đang sử dụng
+                                </div>
+                                <div class="dynamic-info__param" id="cpu-usage">
+                                    {{ device.CPUUsage }}%
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <div class="dynamic-info__label">
+                                    Processes
+                                </div>
+                                <div class="dynamic-info__param" id="num-process">
+                                    {{ device.numProcess }}
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <div class="dynamic-info__label">
+                                    Threads
+                                </div>
+                                <div class="dynamic-info__param" id="num-thread">
+                                    {{ device.numThread }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="RAM" role="tabpanel" aria-labelledby="RAM-tab">
+                    <div class="chart">
+                        <canvas id="RAM-Chart"></canvas>
+                    </div>
+                    <div class="dynamic-info">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <div class="dynamic-info__label">
+                                    Đang sử dụng
+                                </div>
+                                <div class="dynamic-info__param" id="ram-usage">
+                                    {{ fixed device.RAMUsage }} GB
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <div class="dynamic-info__label">
+                                    Khả dụng
+                                </div>
+                                <div class="dynamic-info__param" id="ram-free">
+                                    {{ sub device.RAMSize device.RAMUsage }} GB
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="DISK" role="tabpanel" aria-labelledby="DISK-tab">
+                    <div class="chart">
+                        <canvas id="DISK-Chart"></canvas>
+                    </div>
+                    <div class="dynamic-info">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <div class="dynamic-info__label">
+                                    Đang sử dụng
+                                </div>
+                                <div class="dynamic-info__param" id="disk-usage">
+                                    {{ device.diskUsage }}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="GPU" role="tabpanel" aria-labelledby="GPU-tab">
+                    <div class="chart">
+                        <canvas id="GPU-Chart"></canvas>
+                    </div>
+                    <div class="dynamic-info">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <div class="dynamic-info__label">
+                                    Đang sử dụng
+                                </div>
+                                <div class="dynamic-info__param" id="gpu-usage">
+                                    {{ device.GPUUsage }}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade{{ moreContent }}" id="more" role="tabpanel" aria-labelledby="more-tab">
+                    <div class="more mt-3">
+                        <div class="more-heading">
+                            <span class="more-heading__content">Hẹn giờ tắt máy</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input timer-btn" type="checkbox" id="flexSwitchCheckDefault"
+                                    {{#if moreStatus }} checked {{/if}} />
+                            </div>
+                        </div>
+                        <form action="/devices/{{ device._id }}?name={{ device.computerName }}" method="POST"
+                            class="more-form mt-3">
+                            <div class="more-form__modal" {{#if moreStatus }} style="display: none;" {{/if}}></div>
+                            <div class="more-group">
+                                <label class="more-form__label">
+                                    Máy sẽ tắt sau
+                                    <input type="text" name="min" id="time" class="more-control">
+                                    phút
+                                </label>
+                                <br>
+                                <span class="more-message"></span>
+                            </div>
+                            <br>
+                            <input type="submit" value="Lưu" class="btn">
+                        </form>
+                        <form action="/devices/cancel/{{ device._id }}?name={{ device.computerName }}" method="POST"
+                            class="cancel-form">
+                            <input type="submit" value="Hủy" class="btn-cancel">
+                        </form>
+                        <div class="more-status">
+                            {{ moreStatus }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3">
+            <div class="right-panel">
+                <div class="row mb-3">
+                    <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        Chipset
+                    </div>
+                    <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        {{ device.chipset }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        Số core
+                    </div>
+                    <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        {{ device.numberOfLogicalProcessors }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        GPU
+                    </div>
+                    <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        {{ device.GPUName }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        RAM
+                    </div>
+                    <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        {{ device.RAMSize }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        IP
+                    </div>
+                    <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        {{ device.IPAddress }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="static-label col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        MAC
+                    </div>
+                    <div class="static-info col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        {{ device.MACAddress }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    function updateData(array, data) {
+        const n = array.length;
+        for (var i = 1; i < n; i++) {
+            array[i - 1] = array[i];
+        }
+        array[n - 1] = data;
+        return array;
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const socket = io();
+        const cpuUsage = document.querySelector('#cpu-usage');
+        const numProcess = document.querySelector('#num-process');
+        const numThread = document.querySelector('#num-thread');
+        const ramUsage = document.querySelector('#ram-usage');
+        const ramFree = document.querySelector('#ram-free');
+        const diskUsage = document.querySelector('#disk-usage');
+        const gpuUsage = document.querySelector('#gpu-usage');
+
+        var CPU = document.getElementById("CPU-Chart").getContext('2d');
+        var CPUChart = new Chart(CPU, {
+            type: 'line',
+            data: {
+                labels: ["60 seconds", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0"],
+                datasets: [{
+                    label: "Utilzation",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: [
+                        'rgba(152, 222, 217, .5)',
+                    ],
+                    borderColor: [
+                        'rgba(152, 222, 217, 1)',
+                    ],
+                    borderWidth: 2,
+                    radius: 0,
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        stacked: true,
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            stepSize: 20,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: true,
+                            maxRotation: 0,
+                            minRotation: 0,
+                            maxTicksLimit: 6
+                        }
+                    }]
+                },
+                tooltips: { enabled: false },
+                hover: { mode: null },
+            }
+        });
+
+        var ram = document.getElementById("RAM-Chart").getContext('2d');
+        var RAMChart = new Chart(ram, {
+            type: 'line',
+            data: {
+                labels: ["60 seconds", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0"],
+                datasets: [{
+                    label: "Utilzation",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: [
+                        'rgba(152, 222, 217, .5)',
+                    ],
+                    borderColor: [
+                        'rgba(152, 222, 217, 1)',
+                    ],
+                    borderWidth: 2,
+                    radius: 0,
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        stacked: true,
+                        ticks: {
+                            min: 0,
+                            max: {{ device.RAMSize }},
+                stepSize: 2,
+            }
+        }],
+            xAxes: [{
+                ticks: {
+                    autoSkip: true,
+                    maxRotation: 0,
+                    minRotation: 0,
+                    maxTicksLimit: 6
+                }
+            }]
+                },
+        tooltips: { enabled: false },
+        hover: { mode: null },
+            }
+        });
+
+    var DISK = document.getElementById("DISK-Chart").getContext('2d');
+    var DISKChart = new Chart(DISK, {
+        type: 'line',
+        data: {
+            labels: ["60 seconds", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0"],
+            datasets: [{
+                label: "Utilzation",
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                backgroundColor: [
+                    'rgba(152, 222, 217, .5)',
+                ],
+                borderColor: [
+                    'rgba(152, 222, 217, 1)',
+                ],
+                borderWidth: 2,
+                radius: 0,
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    display: true,
+                    stacked: true,
+                    ticks: {
+                        min: 0,
+                        max: 100,
+                        stepSize: 20,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 6
+                    }
+                }]
+            },
+            tooltips: { enabled: false },
+            hover: { mode: null },
+        }
+    });
+
+    var GPU = document.getElementById("GPU-Chart").getContext('2d');
+    var GPUChart = new Chart(GPU, {
+        type: 'line',
+        data: {
+            labels: ["60 seconds", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0"],
+            datasets: [{
+                label: "Utilzation",
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                backgroundColor: [
+                    'rgba(152, 222, 217, .5)',
+                ],
+                borderColor: [
+                    'rgba(152, 222, 217, 1)',
+                ],
+                borderWidth: 2,
+                radius: 0,
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    display: true,
+                    stacked: true,
+                    ticks: {
+                        min: 0,
+                        max: 100,
+                        stepSize: 20,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 6
+                    }
+                }]
+            },
+            tooltips: { enabled: false },
+            hover: { mode: null },
+        }
+    });
+
+    socket.on('data', (data) => {
+        CPUChart.data.datasets[0].data = updateData(CPUChart.data.datasets[0].data, data.data.cpuUsage);
+        CPUChart.update();
+        cpuUsage.innerHTML = data.data.cpuUsage + '%';
+        numProcess.innerHTML = data.data.numProcess;
+        numThread.innerHTML = data.data.numThread;
+
+        RAMChart.data.datasets[0].data = updateData(RAMChart.data.datasets[0].data, data.data.ramUsage);
+        RAMChart.update();
+        ramUsage.innerHTML = data.data.ramUsage + ' GB';
+        ramFree.innerHTML = data.data.ramFree + ' GB';
+
+        DISKChart.data.datasets[0].data = updateData(DISKChart.data.datasets[0].data, data.data.diskUsage);
+        DISKChart.update();
+        diskUsage.innerHTML = data.data.diskUsage + '%';
+        
+        GPUChart.data.datasets[0].data = updateData(GPUChart.data.datasets[0].data, data.data.gpuUsage);
+        GPUChart.update();
+        gpuUsage.innerHTML = data.data.gpuUsage + '%';
+    });
+
+    const timerBtn = document.querySelector('.timer-btn');
+    const moreFormModal = document.querySelector('.more-form__modal');
+    timerBtn.onchange = () => {
+        if (timerBtn.checked == true) {
+            moreFormModal.style.display = 'none';
+        } else {
+            moreFormModal.style.display = 'block';
+            document.querySelector('.more-group').classList.remove('invalid');
+            document.querySelector('.more-control').value = '';
+            document.querySelector('.more-message').innerText = '';
+        }
+    }
+
+    Validator({
+        form: '.more-form',
+        formGroupSelector: '.more-group',
+        errorSelector: '.more-message',
+        rules: [
+            Validator.isRequired('#time'),
+            Validator.isNumber('#time'),
+        ],
+    });
+    });
+</script>
