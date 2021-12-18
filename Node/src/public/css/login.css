@@ -1,0 +1,93 @@
+.app {
+    background-image: url(/img/login.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-attachment: fixed; 
+    background-size: 100% auto;
+    height: 100vh;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 56px);
+}
+
+.login-form {
+    width: 400px;
+    min-height: 100px;
+    padding: 32px 24px;
+    text-align: center;
+    background: #f2f2f2;
+    border-radius: 5px;
+    margin: 24px;
+    align-self: center;
+    text-align: left;
+    box-shadow: 5px 5px 5px 0 rgba(5, 0, 0, 0.1);
+}
+
+.form .heading {
+    font-size: 2rem;
+}
+
+.form-group {
+    display: flex;
+    margin-bottom: 16px;
+    flex-direction: column;
+}
+
+.form-control {
+    height: 40px;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 2px solid #e6e6e6;
+    border-radius: 0;
+    background-color: #f2f2f2;
+    outline: none;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: var(--main-color-dark);
+    background-color: #f2f2f2;
+    box-shadow: none;
+}
+
+.form-control:hover {
+    border-color: var(--main-color-dark);
+}
+
+.form-group.invalid .form-control {
+    border-color: var(--color-red);
+}
+
+.form-group.invalid .form-message {
+    display: block;
+}
+
+.form-message {
+    display: none;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 4px 0 0;
+    color: var(--color-red);
+}
+
+.form-submit {
+    outline: none;
+    background-color: var(--main-color);
+    margin-top: 12px;
+    padding: 8px 16px;
+    font-weight: 600;
+    color: #8D8D8D;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.form-submit:hover {
+    background-color: var(--main-color-light);
+}

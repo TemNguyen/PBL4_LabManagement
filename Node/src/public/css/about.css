@@ -1,0 +1,111 @@
+.app {
+    background-image: url(../img/login.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-attachment: fixed; 
+    background-size: 100% auto;
+    height: 100vh;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 56px);
+}
+
+.main-content {
+    width: 450px;
+    min-height: 100px;
+    text-align: center;
+    background: #f2f2f2;
+    border-radius: 5px;
+    margin: 24px;
+    align-self: center;
+    text-align: center;
+    box-shadow: 5px 5px 5px 0 rgba(5, 0, 0, 0.1);
+}
+
+.about-tab {
+    display: flex;
+    margin: 0;
+}
+
+.about-item {
+    flex: 1;
+    border-bottom: 2px solid transparent;
+    transition: all 0.5s ease 0s;
+}
+
+.about-item.active {
+    border-bottom: 2px solid var(--main-color-dark);
+}
+
+.about-item__link {
+    display: block;
+    padding: 16px 20px 10px;
+    color: var(--main-color-dark);
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.about-item__link:hover {
+    color: var(--main-color-dark);
+    background-color: #dafde4;
+}
+
+.about-content {
+    font-size: 16px;
+    color: var(--text-color);
+    padding: 30px 20px;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+}
+
+.about-pane {
+    display: none;
+    flex: 1;
+}
+
+.about-pane.active {
+    display: block;
+}
+
+.about-content__header {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+span > b {
+    display: block;
+    font-size: 18px;
+    padding: 5px 0;
+}
+
+.about-contact div {
+    padding-bottom: 5px;
+}
+
+.about-contact + .about-contact {
+    margin-top: 20px;
+}
+
+.about-contact__name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.about-contact__icon {
+    margin-right: 5px;
+}
+
+.about-contact__link {
+    color: var(--main-color-dark);
+    font-size: 18px;
+}
+
+.about-contact__link:hover {
+    color: var(--main-color);
+}

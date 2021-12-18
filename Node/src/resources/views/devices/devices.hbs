@@ -1,0 +1,39 @@
+<span class="main-right__heading">
+    Quản lí phòng máy
+</span>
+<div class="main-right__content">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên máy</th>
+                <th scope="col">IP</th>
+                <th scope="col">MAC</th>
+                <th scope="col">Chipset</th>
+                <th scope="col">Card đồ họa</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each _devices}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.computerName}}</td>
+                <td>{{this.IPAddress}}</td>
+                <td>{{this.MACAddress}}</td>
+                <td>{{this.chipset}}</td>
+                <td>{{this.GPUName}}</td>
+                <td>
+                    <a href="/devices/{{this._id}}" class="detail-link{{#unless this.isOnline}} disable{{/unless}}">Xem chi tiết</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="7" class="text-center">
+                    Không có máy tính nào trong mạng.
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
